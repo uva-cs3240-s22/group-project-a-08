@@ -56,7 +56,7 @@ See details in deployment structure for more infomation.
 ### Deployment structure
 This project already has an associated heroku team which oversees all environments that are plugged in
 Throughout the project there will be two environments plugged into the repo
-1. [Production](uva-cs3240s22a08-word-of-mouth)
+1. [Production](https://uva-cs3240s22a08-word-of-mouth.herokuapp.com/)
 	- This is where all final changes are to be demonstrated
 	- Builds from the main branch
 1. [Testing](https://uva-cs3240s22-womt.herokuapp.com/)
