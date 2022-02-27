@@ -12,7 +12,7 @@ This project is built off of
 - Django
 - PostgreSql
 
-See installaion and setup information before contributing
+See installation and post-installation steps below before contributing
 
 ### Installation
 Empty for now..
@@ -22,7 +22,7 @@ Empty for now..
 
 ## Contributing
 ### Branch structure
-The following tier branch structure shall exist for the duration of the project
+The following branching tier system shall exist for the duration of the project
 1. main
 	- This is the main branch 
 	- **Never directly commit to this branch**
@@ -50,15 +50,18 @@ The following tier branch structure shall exist for the duration of the project
 - a pull request is created to merge from the tier 3 branch to the testing branch
 - after testing, a pull request should to created to merge from the testing branch to the main branch
 
-The reason for this is mainly due to the nature in which the repo is deployed.
-See details in deployment structure for more infomation.
+The reason for this is mainly due to the nature in which the repo is deployed\
+See details in deployment structure for more infomation
 
 ### Deployment structure
-This project already has an associated heroku team which oversees all environments that are plugged in
+This project already has an associated heroku team which oversees all environments that are plugged in\
 Throughout the project there will be two environments plugged into the repo
-1. [Production](uva-cs3240s22a08-word-of-mouth)
+
+1. [Production](https://uva-cs3240s22a08-word-of-mouth.herokuapp.com/)
 	- This is where all final changes are to be demonstrated
 	- Builds from the main branch
+	- Builds are automatic and will occur after sucessfully completing Github CI workflows
 1. [Testing](https://uva-cs3240s22-womt.herokuapp.com/)
 	- All new features will be tested here before making their way to production
 	- Builds from the testing branch
+	- Builds are automic and occur after all GitHub CI workflows are completed
