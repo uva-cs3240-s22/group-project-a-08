@@ -61,7 +61,7 @@ Throughout the project there will be two environments plugged into the repo
 	- This is where all final changes are to be demonstrated
 	- Builds from the main branch
 	- Builds are automatic and will occur after sucessfully completing Github CI workflows
-1. [Testing](https://uva-cs3240s22-womt.herokuapp.com/)
+1. [Testing](https://uva-cs3240s22a08-womt.herokuapp.com/)
 	- All new features will be tested here before making their way to production
 	- Builds from the testing branch
 	- Builds are automic and occur after all GitHub CI workflows are completed
