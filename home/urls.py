@@ -1,4 +1,4 @@
-"""mysite URL Configuration
+"""home URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -17,11 +17,5 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/',      admin.site.urls),
-    path("accounts/",   include("allauth.urls")),
-    path('',            include("home.urls"))
+    path('',            views.home)
 ]
-
-# Allauth sources
-# https://www.tutorialspoint.com/google-authentication-in-django
-# https://www.section.io/engineering-education/django-google-oauth/
