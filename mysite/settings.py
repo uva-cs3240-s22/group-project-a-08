@@ -32,7 +32,12 @@ SECRET_KEY = 'django-insecure-nc+9%$spfhk)0c7^c%jq#f&f7npk@%i!srbn10$4-0olj-#f)1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'https://uva-cs3240s22a08-word-of-mouth.herokuapp.com/',
+    'https://uva-cs3240s22a08-womt.herokuapp.com/'
+]
 
 
 # Application definition
@@ -57,7 +62,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
 
     # Sub apps
-    # "home"
+    "home",
 ]
 
 # Use FOR OAuth
@@ -109,16 +114,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
-DATABASES = {}
-DATABASES['default'].update(DATABASE_URL.config(conn_max_age=600))
+# DATABASES = {}
+# DATABASES['default'].update(DATABASE_URL.config(conn_max_age=600))
 
 
 # Password validation
