@@ -37,8 +37,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'https://uva-cs3240s22a08-word-of-mouth.herokuapp.com/',
-    'https://uva-cs3240s22a08-womt.herokuapp.com/'
+    'uva-cs3240s22a08-word-of-mouth.herokuapp.com/',
+    'uva-cs3240s22a08-womt.herokuapp.com/'
 ]
 
 
