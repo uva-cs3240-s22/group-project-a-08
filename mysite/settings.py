@@ -34,14 +34,13 @@ SECRET_KEY = 'django-insecure-nc+9%$spfhk)0c7^c%jq#f&f7npk@%i!srbn10$4-0olj-#f)1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-# ALLOWED_HOSTS = [
-#     'localhost',
-#     '127.0.0.1',
-#     'https://uva-cs3240s22a08-word-of-mouth.herokuapp.com',
-#     'https://uva-cs3240s22a08-womt.herokuapp.com',
-# ]
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'uva-cs3240s22a08-word-of-mouth.herokuapp.com',
+    'uva-cs3240s22a08-womt.herokuapp.com',
+]
 
 
 # Application definition
