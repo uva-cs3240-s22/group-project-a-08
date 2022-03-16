@@ -116,29 +116,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-'''
-
+DATABASES = {}
 def set_default_database():
-  DATABASES = {
-    'default':{
-      'ENGINE': 'django.db.backends.sqlite3',
-      'NAME': BASE_DIR / 'db.sqlite3'
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
-  }
-
 
 if 'test' in sys.argv:
-  set_default_database()
+    set_default_database()
 else:
   try:
-    DATABASES = {}
     DATABASES['default'] = DATABASE_URL.parse(os.environ['DATABASE_URL'], conn_max_age=600)
   except KeyError:
     set_default_database()
@@ -146,6 +134,9 @@ else:
 # DATABASES = {}
 # DATABASES['default'].update(DATABASE_URL.config(conn_max_age=600))
 
+# Drop SSL mode for SQLite
+# options = DATABASES['default'].get('OPTIONS', {})
+# options.pop('sslmode', None)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -201,7 +192,3 @@ try:
         django_heroku.settings(locals())
 except ImportError:
     found = False
-
-# Drop SSL mode for SQLite
-# options = DATABASES['default'].get('OPTIONS', {})
-# options.pop('sslmode', None)
