@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'uva-cs3240s22a08-word-of-mouth.herokuapp.com/',
-    'uva-cs3240s22a08-womt.herokuapp.com/'
+    'uva-cs3240s22a08-womt.herokuapp.com/',
 ]
 
 
