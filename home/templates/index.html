@@ -2,17 +2,74 @@
 <html>
 
 <head>
+    {# Load the tag library #}
+    {% load bootstrap5 %}
+    
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
     <title>Google Registration</title>
 </head>
 
 <body>
-    <h1>My Google Login Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button   class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Recipes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Starred</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+              </li>
 
-    {% else %}
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
+            </ul>
+            <!--
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            -->
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1>My Google Login Project</h1>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }} !</p>
+    
+        {% else %}
+        {% load static %}
+        <button class="btn btn-dark bg-dark">
+          <div>
+            <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
+            <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
+              Login with Google
+            </a>
+          </div>
+        </button>
+
+        {% endif %}    
+      </div>
+
+
 
 </body>
 
