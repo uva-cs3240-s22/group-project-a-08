@@ -11,6 +11,9 @@
     
     {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
     <title>Google Registration</title>
 </head>
 
@@ -50,14 +53,12 @@
         </div>
       </nav>
 
-      <div class="container-fluid">
-        <h1>My Google Login Project</h1>
+      <div class="container-fluid" style="margin-top: 30px;">
         {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }} !</p>
     
         {% else %}
-        {% load static %}
-        <button class="btn btn-dark bg-dark">
+        <button class="btn btn-dark bg-dark btn-google">
           <div>
             <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
             <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
