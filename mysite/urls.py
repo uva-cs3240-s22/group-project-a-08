@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from recipes.views import create_recipe
 
 urlpatterns = [
     path('admin/',      admin.site.urls),
     path("accounts/",   include("allauth.urls")),
-    path('',            include("home.urls"))
+    path('',            include("home.urls")),
+    path('recipes/create/', create_recipe, name="create_recipe") # url path subject to change
 ]
 
 # Allauth sources
