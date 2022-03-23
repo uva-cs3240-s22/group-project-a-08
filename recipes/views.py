@@ -1,14 +1,21 @@
 from django.shortcuts import redirect, render
+from django.views import generic
 
 from recipes.models import Ingredient
 from .forms import IngredientFormSet, RecipeForm
+from .models import Recipe
 
+
+class RecipeListView(generic.ListView):
+    model = Recipe
+    template_name = 'recipes/index.html'
+    context_object_name = "recipe_list"
 
 def create_recipe(request):
     if request.method == "GET":
         form = RecipeForm()
         formset = IngredientFormSet()
-        return render(request, 'create_recipe.html', {"form":form, "formset":formset})
+        return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset})
     elif request.method == "POST":
         form = RecipeForm(request.POST)
         if form.is_valid():
@@ -18,7 +25,7 @@ def create_recipe(request):
                 formset.save()
             return redirect('/')
         else:
-            return render(request, 'create_recipe.html', {"form":form})
+            return render(request, 'recipes/create_recipe.html', {"form":form})
 
 '''
 def create_recipe(request):
