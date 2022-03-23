@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/',      admin.site.urls),
     path("accounts/",   include("allauth.urls")),
     path('',            include("home.urls")),
-    path('recipes/create/', create_recipe, name="create_recipe") # url path subject to change
+    path('recipes/', include('recipes.urls')),
 ]
 
 # Allauth sources

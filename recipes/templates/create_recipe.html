@@ -1,23 +1,97 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-        <h1>Add A Recipe</h1>
-        <form action="." method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <br>
-            <br>
-            <h2>Add Ingredients</h2>
-            {{ formset.management_form }}
-            {% for form in formset %}
-            {{ form.as_p }}
-            {% endfor %}
-            <button type="submit">Submit</button>
-        </form>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <title>Recipe App</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button   class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'recipes:create_recipe' %}">Recipes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Starred</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                <h1>Add A Recipe</h1>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <br>
+                    <h2>Add Ingredients</h2>
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                    {{ form.as_p }}
+                    {% endfor %}
+                    <button type="submit">Submit</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+
+
+<!--h1>Add A Recipe</h1>
+<form class="form-horizontal" method="POST" action="">
+    {% csrf_token %}
+<div class="row spacer">
+<div class="col-2">
+    <label>{{form.name.label}}</label>
+</div>
+<div class="col-4">
+    <div class="input-group">
+        {{form.name}}
+    </div>
+</div>
+</div>
+{{ formset.management_form }}
+{% for form in formset %}
+<div class="row form-row spacer">
+    <div class="col-2">
+        <label>{{form.name.label}}</label>
+    </div>
+    <div class="col-4">
+        <div class="input-group">
+            {{form.name}}
+            <div class="input-group-append">
+                <button class="btn btn-success add-form-row">+</button>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endfor %}
+<div class="row spacer">
+    <div class="col-4 offset-2">
+        <button type="submit" class="btn btn-block btn-primary">Create</button>
+    </div>
+</div>
+</form-->
