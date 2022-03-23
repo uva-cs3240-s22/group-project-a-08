@@ -2,6 +2,8 @@ from django.db import models
 # Source: 
 # https://engineertodeveloper.com/getting-started-with-django-forms-create-a-recipe-app/
 # https://engineertodeveloper.com/getting-started-with-formsets-create-a-recipe-app/
+# https://docs.djangoproject.com/en/4.0/ref/models/querysets/#q-objects
+# https://docs.djangoproject.com/en/4.0/topics/http/shortcuts/
 
 
 # Create your models here.
