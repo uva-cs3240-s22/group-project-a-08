@@ -48,29 +48,94 @@
               </div>
             </div>
           </nav>
-          <div class="container">
+          <div class="mx-3">
             <h1 class="mt-3 text-center">All Recipes</h1>
-            <div>
-            {% if recipe_list %}
-                {% for recipe in recipe_list %}
-                  <div class="card col-3">  
-                    <img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">{{ recipe.title }}</h5>
-                      <p class="card-text">
-                        Intro: {{ recipe.intro }} <br>
-                        PrepTime: {{ recipe.prep_time }} <br>
-                        CookTime: {{ recipe.cook_time }} <br>
-                        Servings: {{ recipe.servings }} <br>
-                      </p>
+            <div class="row">
+              <div class="col-2">
+                <h5>Categories</h5>
+                <div class="accordion accordion-flush" id="accordionFlushExample" style="background-color: green">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Meal Type
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Breakfast
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+                          <label class="form-check-label" for="flexCheckChecked">
+                            Lunch
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+                          <label class="form-check-label" for="flexCheckChecked">
+                            Dinner
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+                          <label class="form-check-label" for="flexCheckChecked">
+                            Snack
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                {% endfor %}
-            {% else %}
-                <p>No recipes are available.</p>
-            {% endif %}
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Category #2
+                      </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">Placeholder content for this accordion</div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Category #3
+                      </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">Placeholder content for this accordion</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-10">
+                <div>
+                {% if recipe_list %}
+                    {% for recipe in recipe_list %}
+                      <div class="card col-3">  
+                        <img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ recipe.title }}</h5>
+                          <p class="card-text">
+                            Intro: {{ recipe.intro }} <br>
+                            PrepTime: {{ recipe.prep_time }} <br>
+                            CookTime: {{ recipe.cook_time }} <br>
+                            Servings: {{ recipe.servings }} <br>
+                          </p>
+                        </div>
+                      </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No recipes are available.</p>
+                {% endif %}
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
     </body>
 
 </html>
