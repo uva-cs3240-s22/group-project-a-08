@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 # Source: 
 # https://engineertodeveloper.com/getting-started-with-django-forms-create-a-recipe-app/
 # https://engineertodeveloper.com/getting-started-with-formsets-create-a-recipe-app/
@@ -18,7 +19,7 @@ class Recipe(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
-    quantity = models.FloatField()
+    quantity = models.FloatField(validators=[MinValueValidator(0.0)])
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
 
