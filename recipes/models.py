@@ -3,6 +3,7 @@ from django.db import models
 # https://engineertodeveloper.com/getting-started-with-django-forms-create-a-recipe-app/
 # https://engineertodeveloper.com/getting-started-with-formsets-create-a-recipe-app/
 
+INTEGER_CHOICES= [tuple([x,x]) for x in range(1,11)]
 
 # Create your models here.
 class Recipe(models.Model):
@@ -10,7 +11,7 @@ class Recipe(models.Model):
     intro = models.TextField()
     prep_time = models.DurationField()
     cook_time = models.DurationField()
-    servings = models.IntegerField()
+    servings = models.IntegerField(choices=INTEGER_CHOICES)
 
     def __str__(self):
         return self.title
