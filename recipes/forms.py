@@ -14,7 +14,7 @@ class IngredientForm(forms.ModelForm):
         model = Ingredient
         exclude = ('recipe',)
 
-IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm)
+IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=0)
 
 
 

@@ -59,12 +59,43 @@
                     <br>
                     <h2>Add Ingredients</h2>
                     {{ formset.management_form }}
+                    <div id="ingredient-form">
                     {% for form in formset %}
-                    {{ form.as_p }}
+                        <div class="ingredient-form-class">
+                            {{ form.as_p }}
+                        </div>
                     {% endfor %}
+                    </div>
+
+                    <div id="empty-form" class="">{{ formset.empty_form.as_p }}</div>
+                    <button id="add-ingredient" type="button">Add Ingredient</button>
                     <button type="submit">Submit</button>
                 </form>
-                </div>
+                    </div>
+
+                    <script>
+                        const addIngr = document.getElementById("add-ingredient")
+                        const totalNewForms = document.getElementById("id_ingredients-TOTAL_FORMS")
+                        const currentIngrFormsCount = document.getElementsByClassName('ingredient-form-class')
+
+                        addIngr.addEventListener('click',add_form)
+                        function add_form(args) {
+                            if(event) {
+                                event.preventDefault()
+                            }
+                            const currentIngrFormsCount = document.getElementsByClassName('ingredient-form-class')
+                            const currentFormCount = currentIngrFormsCount.length+1
+
+                            const formCopyTarget = document.getElementById("ingredient-form")
+                            const copyemptyform = document.getElementById("empty-form").cloneNode(true)
+                            copyemptyform.setAttribute('class', 'ingredient-form-class')
+                            copyemptyform.setAttribute('id', `ingredient-form-${currentFormCount}`)
+                            const regex = new RegExp('__prefix__', 'g')
+                            copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
+                            totalNewForms.setAttribute('value', currentFormCount + 1)
+                            formCopyTarget.append(copyemptyform)
+                        }
+                    </script>
             </div>
         </div>
     </body>
