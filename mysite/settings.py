@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
     # Sub apps
     "home",
+    "recipes",
 ]
 
 # Use FOR OAuth
