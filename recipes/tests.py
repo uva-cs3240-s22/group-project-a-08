@@ -21,15 +21,16 @@ class RecipeListTests(TestCase):
         self.assertQuerysetEqual(response.context['recipe_list'], [recipe])
 
 
-# class RecipeSearchTests(TestCase):
-#     def setUp(self):
-#         Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
+class RecipeSearchTests(TestCase):
+    results = []
+
+    def setUp(self):
+        self.results.append(Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2))
     
     # def test_search_success(self):
     #     response = self.client.get("/recipes/search/?recipeTitle=a")
-    #     response = self.client.get(reverse('recipes:search'))
-    #     # self.assertQuerysetEqual(response.context['results_list'], [])
-    #     self.assertTrue(True)
+    #     dict = {"results": self.results}
+    #     self.assertQuerysetEqual(response.context['results_list'], [])
         
 
 
