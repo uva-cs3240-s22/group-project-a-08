@@ -4,15 +4,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
-from recipes.models import Ingredient
+# from recipes.models import Ingredient
 from .forms import IngredientFormSet, RecipeForm
-from .models import Recipe
+from .models import Recipe, Ingredient
 
 
 class RecipeListView(generic.ListView):
     model = Recipe
     template_name = 'recipes/index.html'
     context_object_name = "recipe_list"
+
 
 class SearchResultsView(generic.ListView):
     model = Recipe
@@ -36,6 +37,7 @@ def create_recipe(request):
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})
 
+@login_required(login_url='/')
 def search_recipes(request):
     if request.method == "GET":
         query = request.GET["recipeTitle"]
