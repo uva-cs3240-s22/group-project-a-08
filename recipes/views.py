@@ -18,6 +18,8 @@ class SearchResultsView(generic.ListView):
     template_name = 'recipes/search_results.html'
     context_object_name = "results_list"
 
+from django.contrib.auth.decorators import login_required
+@login_required(login_url='/')
 def create_recipe(request):
     if request.method == "GET":
         form = RecipeForm()
