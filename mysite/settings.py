@@ -9,9 +9,17 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
 import django_heroku
+import dj_database_url as DATABASE_URL
+import sys
+
 
 from pathlib import Path
+
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,19 +34,54 @@ SECRET_KEY = 'django-insecure-nc+9%$spfhk)0c7^c%jq#f&f7npk@%i!srbn10$4-0olj-#f)1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'uva-cs3240s22a08-word-of-mouth.herokuapp.com',
+    'uva-cs3240s22a08-womt.herokuapp.com',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Styling
+    'bootstrap5',
+
+    # Default Django items
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #OAUth stuff
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+
+    # Sub apps
+    "home",
 ]
+
+# Use FOR OAuth
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+   }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +94,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
+
 
 TEMPLATES = [
     {
@@ -74,13 +118,27 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES = {}
+def set_default_database():
+    DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
-}
 
+if 'test' in sys.argv:
+    set_default_database()
+else:
+  try:
+    DATABASES['default'] = DATABASE_URL.parse(os.environ['DATABASE_URL'], conn_max_age=600)
+  except KeyError:
+    set_default_database()
+
+# DATABASES = {}
+# DATABASES['default'].update(DATABASE_URL.config(conn_max_age=600))
+
+# Drop SSL mode for SQLite
+# options = DATABASES['default'].get('OPTIONS', {})
+# options.pop('sslmode', None)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -99,6 +157,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+   "django.contrib.auth.backends.ModelBackend",
+   "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 
 # Internationalization
@@ -119,10 +182,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+try:
+    if 'HEROKU' in os.environ:
+        import django_heroku
+        django_heroku.settings(locals())
+except ImportError:
+    found = False
