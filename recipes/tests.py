@@ -70,7 +70,7 @@ class RecipeListViewTest(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('recipes:create_recipe'))
-        self.assertRedirects(response, '/accounts/login/?next=/recipes/create/')
+        self.assertRedirects(response, '/?next=/recipes/create/')
 
     def test_logged_in_uses_correct_template(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
@@ -82,4 +82,4 @@ class RecipeListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Check we used correct template
-        self.assertTemplateUsed(response, 'templates/create_recipe.html')
+        self.assertTemplateUsed(response, 'create_recipe.html')
