@@ -10,8 +10,8 @@ INTEGER_CHOICES= [tuple([x,x]) for x in range(1,11)]
 class Recipe(models.Model):
     title = models.CharField(max_length=150)
     intro = models.TextField()
-    prep_time = models.DurationField()
-    cook_time = models.DurationField()
+    prep_time = models.IntegerField()
+    cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
 
     def __str__(self):
