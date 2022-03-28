@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 
-SITE_ID = 1
+SITE_ID = 2
 LOGIN_REDIRECT_URL = "/"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
