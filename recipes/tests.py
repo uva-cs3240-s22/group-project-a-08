@@ -27,10 +27,15 @@ class RecipeSearchTests(TestCase):
     def setUp(self):
         self.results.append(Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2))
     
-    # def test_search_success(self):
-    #     response = self.client.get("/recipes/search/?recipeTitle=a")
-    #     dict = {"results": self.results}
-    #     self.assertQuerysetEqual(response.context['results_list'], [])
+    def test_search_success(self):
+        response = self.client.get("/recipes/search/?recipeTitle=Coo")
+        data = '<p class="card-text">Intro: yummy cookies <br>PrepTime: 5 <br>CookTime: 10 <br>Servings: 2 <br></p>'
+        self.assertInHTML(data,response.content.decode())
+    
+    def test_search_failure(self):
+        response = self.client.get("/recipes/search/?recipeTitle=fail")
+        data = '<p>No recipes are available.</p>'
+        self.assertInHTML(data,response.content.decode())
         
 
 
