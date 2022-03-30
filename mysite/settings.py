@@ -40,6 +40,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     'uva-cs3240s22a08-word-of-mouth.herokuapp.com',
     'uva-cs3240s22a08-womt.herokuapp.com',
+    'testserver'
 ]
 
 
