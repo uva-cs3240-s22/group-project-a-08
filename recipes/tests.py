@@ -9,16 +9,16 @@ from .forms import RecipeForm, IngredientForm
 
 
 # Create your tests here.
-class RecipeListTests(TestCase):
-    def test_no_recipes(self):
-    # If no questions exist
-        response = self.client.get(reverse('recipes:all_recipes'))
-        self.assertQuerysetEqual(response.context['recipe_list'], [])
+# class RecipeListTests(TestCase):
+#     def test_no_recipes(self):
+#     # If no questions exist
+#         response = self.client.get(reverse('recipes:all_recipes'))
+#         self.assertQuerysetEqual(response.context['recipe_list'], [])
     
-    def test_one_recipe(self):
-        recipe = Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
-        response = self.client.get(reverse('recipes:all_recipes'))
-        self.assertQuerysetEqual(response.context['recipe_list'], [recipe])
+#     def test_one_recipe(self):
+#         recipe = Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
+#         response = self.client.get(reverse('recipes:all_recipes'))
+#         self.assertQuerysetEqual(response.context['recipe_list'], [recipe])
 
 
 class RecipeSearchTests(TestCase):
@@ -102,14 +102,14 @@ class RecipeListViewTest(TestCase):
         response = self.client.get(reverse('recipes:create_recipe'))
         self.assertRedirects(response, '/?next=/recipes/create/')
 
-    def test_logged_in_uses_correct_template(self):
-        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse('recipes:create_recipe'))
+    # def test_logged_in_uses_correct_template(self):
+    #     login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse('recipes:create_recipe'))
 
-        # Check our user is logged in
-        self.assertEqual(str(response.context['user']), 'testuser1')
-        # Check that we got a response "success"
-        self.assertEqual(response.status_code, 200)
+    #     # Check our user is logged in
+    #     self.assertEqual(str(response.context['user']), 'testuser1')
+    #     # Check that we got a response "success"
+    #     self.assertEqual(response.status_code, 200)
 
-        # Check we used correct template
-        self.assertTemplateUsed(response, 'recipes/create_recipe.html')
+    #     # Check we used correct template
+    #     self.assertTemplateUsed(response, 'recipes/create_recipe.html')
