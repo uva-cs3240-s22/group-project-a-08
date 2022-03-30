@@ -25,6 +25,8 @@ class RecipeSearchTests(TestCase):
     results = []
 
     def setUp(self):
+        test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
+        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         self.results.append(Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2))
     
     def test_search_success(self):
