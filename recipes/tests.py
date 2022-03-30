@@ -36,6 +36,11 @@ class RecipeSearchTests(TestCase):
         response = self.client.get("/recipes/search/?recipeTitle=fail")
         data = '<p>No recipes are available.</p>'
         self.assertInHTML(data,response.content.decode())
+    
+    def test_empty_query(self):
+        response = self.client.get("/recipes/search/?recipeTitle=")
+        data = '<p class="card-text">Intro: yummy cookies <br>PrepTime: 5 <br>CookTime: 10 <br>Servings: 2 <br></p>'
+        self.assertInHTML(data,response.content.decode())
         
 
 
