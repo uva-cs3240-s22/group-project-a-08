@@ -43,6 +43,8 @@ def search_recipes(request):
         result_dict = {"results": results}
     return render(request, "recipes/search_results.html", result_dict)
 
+
+
 '''
 def create_recipe(request):
     template_name = 'create_recipe.html'
