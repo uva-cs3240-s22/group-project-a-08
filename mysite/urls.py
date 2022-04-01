@@ -23,7 +23,7 @@ urlpatterns = [
     path("accounts/",   include("allauth.urls")),
     path('',            include("home.urls")),
     path('recipes/', include('recipes.urls')),
-    path('logout', LogoutView.as_view()),
+    path('logout', LogoutView.as_view(), name='logout'),
 ]
 
 # Allauth sources
