@@ -14,6 +14,25 @@ class Recipe(models.Model):
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
 
+    # meal type
+    BREAKFAST = 'BR'
+    LUNCH = 'LU'
+    DINNER = 'DI'
+    SNACK = 'SN'
+    OTHER = 'OT'
+    MEAL_TYPE_CHOICES = [
+        (BREAKFAST, 'Breakfast'),
+        (LUNCH, 'Lunch'),
+        (DINNER, 'Dinner'),
+        (SNACK, 'Snack'),
+        (OTHER, 'Other'),
+    ]
+    meal_type = models.CharField(
+        max_length=2,
+        choices=MEAL_TYPE_CHOICES,
+        default=OTHER,
+    )
+
     def __str__(self):
         return self.title
 
