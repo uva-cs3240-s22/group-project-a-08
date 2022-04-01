@@ -75,36 +75,39 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                            Breakfast
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-                          <label class="form-check-label" for="flexCheckChecked">
-                            Lunch
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-                          <label class="form-check-label" for="flexCheckChecked">
-                            Dinner
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-                          <label class="form-check-label" for="flexCheckChecked">
-                            Snack
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-                          <label class="form-check-label" for="flexCheckChecked">
-                            Other
-                          </label>
-                        </div>
+                        <form action="{% url 'recipes:filter' %}" method="get">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="br" id="br" name="mealType">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              Breakfast
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="lu" id="lu" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Lunch
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="di" id="di" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Dinner
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="sn" id="sn" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Snack
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="ot" id="ot" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Other
+                            </label>
+                          </div>
+                          <button class="btn btn-outline-success" type="submit">Filter</button>
+                        </form>
                       </div>
                     </div>
                   </div>

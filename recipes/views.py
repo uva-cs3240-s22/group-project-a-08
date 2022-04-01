@@ -43,6 +43,60 @@ def search_recipes(request):
         result_dict = {"results": results}
     return render(request, "recipes/search_results.html", result_dict)
 
+def filter_recipes(request):
+
+    if request.method == "GET":
+        query = request.GET.getlist('mealType')
+        results = Recipe.objects.all()
+        if 'br' not in query:
+            results = results.exclude(Q(meal_type__iexact='BR'))
+        if 'lu' not in query:
+            results = results.exclude(Q(meal_type__iexact='LU'))
+        if 'di' not in query:
+            results = results.exclude(Q(meal_type__iexact='DI'))
+        if 'sn' not in query:
+            results = results.exclude(Q(meal_type__iexact='SN'))
+        if 'ot' not in query:
+            results = results.exclude(Q(meal_type__iexact='OT'))
+
+        result_dict = {"results": results}
+    return render(request, "recipes/filter_results.html", result_dict)
+
+
+
+    # if request.method == "GET":
+    #     query = request.GET.getlist('mealType')
+    #     if 'br' in query:
+    #         results = Recipe.objects.breakfast()
+    #     if 'lu' in query:
+    #         results = Recipe.objects.lunch()
+    #     if 'di' in query:
+    #         results = Recipe.objects.dinner()
+    #     if 'sn' in query:
+    #         results = Recipe.objects.snack()
+    #     if 'ot' in query:
+    #         results = Recipe.objects.other_mt()
+
+    #     result_dict = {"results": results}
+    # return render(request, "recipes/filter_results.html", result_dict)
+
+
+
+    # if request.method == "GET":
+    #     mealType = request.GET.getlist('mealType')
+
+    # if mealType:
+    #     recipe = Recipe.objects.filter(meal_type=mealType)
+    # else:
+    #     recipe = Recipe.objects.all()
+
+    # recipes = Recipe.objects.all()
+
+    # return render(
+    #     request, "recipes/filter_results.html",
+    #     {'recipes_dict': recipes, 'recipe': recipe,}
+    # )
+
 
 
 '''
