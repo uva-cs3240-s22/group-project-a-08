@@ -22,13 +22,15 @@
     
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
-        <title>Recipe App</title>
+        <title>Upload Recipe</title>
     </head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <body style="padding-bottom: 30px;">
+
+        <!-- NAVBAR -->
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
+              <a class="navbar-brand" href="#">Word of Mouth</a>
               <button   class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -53,13 +55,16 @@
                     <a class="nav-link" href="#">Profile</a>
                   </li>
                 </ul>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               </div>
             </div>
           </nav>
+
+        <!-- CREATE RECIPE FORM -->
         <div class="container">
             <div class="row">
                 <div class="col">
-                <h1>Add A Recipe</h1>
+                <h1>Upload A Recipe</h1>
                 <form action="." method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
