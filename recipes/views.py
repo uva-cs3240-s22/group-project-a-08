@@ -70,6 +70,13 @@ def filter_recipes(request):
             results2 = results2.exclude(Q(diet_restriction__iexact='GF'))
         if 'nr' not in query:
             results2 = results2.exclude(Q(diet_restriction__iexact='NR'))
+
+        # filling up queryset if empty
+        if 'br' not in query and 'lu' not in query and 'di' not in query and 'sn' not in query and 'ot' not in query:
+            results1 = Recipe.objects.all()
+        if 've' not in query and 'vg' not in query and 'gf' not in query and 'nr' not in query:
+            results2 = Recipe.objects.all()
+
         print(results1)
         print(results2)
         results = results1.intersection(results2)

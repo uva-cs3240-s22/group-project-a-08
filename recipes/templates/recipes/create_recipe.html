@@ -22,7 +22,7 @@
     
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
-        <title>Recipe App</title>
+        <title>Upload Recipe</title>
     </head>
 
     <body style="padding-bottom: 30px;">
@@ -64,7 +64,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                <h1>Add A Recipe</h1>
+                <h1>Upload A Recipe</h1>
                 <form action="." method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
