@@ -18,7 +18,7 @@
     </head>
 
     <!-- NAVBAR -->
-    <body>
+    <body style="padding-bottom: 30px;">
         <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Word of Mouth</a>
@@ -66,6 +66,7 @@
             <div class="row">
               <div class="col-2">
                 <h5>Categories</h5>
+                <form action="{% url 'recipes:filter' %}" method="get">
                 <div class="accordion accordion-flush" id="accordionFlushExample" style="background-color: green">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
@@ -75,7 +76,7 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
-                        <form action="{% url 'recipes:filter' %}" method="get">
+                        
                           <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="br" id="br" name="mealType">
                             <label class="form-check-label" for="flexCheckDefault">
@@ -106,22 +107,50 @@
                               Other
                             </label>
                           </div>
-                          <button class="btn btn-outline-success" type="submit">Filter</button>
-                        </form>
+                          
+                        
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTwo">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Category #2
+                        Dietary Restriction
                       </button>
                     </h2>
                     <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">Placeholder content for this accordion</div>
+                      <div class="accordion-body">
+                        
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="ve" id="ve" name="mealType">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              Vegetarian
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="vg" id="vg" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Vegan
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="gf" id="gf" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Gluten-Free
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="nr" id="nr" name="mealType">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              No Restriction
+                            </label>
+                          </div>
+                          
+                        
+                      </div>
                     </div>
                   </div>
-                  <div class="accordion-item">
+                  <!--div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingThree">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                         Category #3
@@ -130,8 +159,10 @@
                     <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">Placeholder content for this accordion</div>
                     </div>
-                  </div>
+                  </div-->
                 </div>
+                <button class="btn btn-outline-success" type="submit">Filter</button>
+              </form>
               </div>
 
               <!-- RECIPE LIST -->
@@ -145,10 +176,11 @@
                                 <div class="card-body">
                                   <h5 class="card-title">{{ recipe.title }}</h5>
                                   <p class="card-text">
-                                    Intro: {{ recipe.intro }} <br>
                                     PrepTime: {{ recipe.prep_time }} <br>
                                     CookTime: {{ recipe.cook_time }} <br>
                                     Servings: {{ recipe.servings }} <br>
+                                    Meal Type: {{ recipe.meal_type }} <br>
+                                    Diet Restriction: {{ recipe.diet_restriction }} <br>
                                   </p>
                                 </div>
                               </div>

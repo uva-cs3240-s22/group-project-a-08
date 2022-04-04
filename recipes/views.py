@@ -47,76 +47,35 @@ def filter_recipes(request):
 
     if request.method == "GET":
         query = request.GET.getlist('mealType')
-        results = Recipe.objects.all()
+        print(query)
+        results1 = Recipe.objects.all()
+        results2 = Recipe.objects.all()
+        # filtering by meal type
         if 'br' not in query:
-            results = results.exclude(Q(meal_type__iexact='BR'))
+            results1 = results1.exclude(Q(meal_type__iexact='BR'))
         if 'lu' not in query:
-            results = results.exclude(Q(meal_type__iexact='LU'))
+            results1 = results1.exclude(Q(meal_type__iexact='LU'))
         if 'di' not in query:
-            results = results.exclude(Q(meal_type__iexact='DI'))
+            results1 = results1.exclude(Q(meal_type__iexact='DI'))
         if 'sn' not in query:
-            results = results.exclude(Q(meal_type__iexact='SN'))
+            results1 = results1.exclude(Q(meal_type__iexact='SN'))
         if 'ot' not in query:
-            results = results.exclude(Q(meal_type__iexact='OT'))
-
+            results1 = results1.exclude(Q(meal_type__iexact='OT'))
+        # filtering by dietary restriction
+        if 've' not in query:
+            results2 = results2.exclude(Q(diet_restriction__iexact='VE'))
+        if 'vg' not in query:
+            results2 = results2.exclude(Q(diet_restriction__iexact='VG'))
+        if 'gf' not in query:
+            results2 = results2.exclude(Q(diet_restriction__iexact='GF'))
+        if 'nr' not in query:
+            results2 = results2.exclude(Q(diet_restriction__iexact='NR'))
+        print(results1)
+        print(results2)
+        results = results1.intersection(results2)
         result_dict = {"results": results}
     return render(request, "recipes/filter_results.html", result_dict)
 
 
 
-    # if request.method == "GET":
-    #     query = request.GET.getlist('mealType')
-    #     if 'br' in query:
-    #         results = Recipe.objects.breakfast()
-    #     if 'lu' in query:
-    #         results = Recipe.objects.lunch()
-    #     if 'di' in query:
-    #         results = Recipe.objects.dinner()
-    #     if 'sn' in query:
-    #         results = Recipe.objects.snack()
-    #     if 'ot' in query:
-    #         results = Recipe.objects.other_mt()
-
-    #     result_dict = {"results": results}
-    # return render(request, "recipes/filter_results.html", result_dict)
-
-
-
-    # if request.method == "GET":
-    #     mealType = request.GET.getlist('mealType')
-
-    # if mealType:
-    #     recipe = Recipe.objects.filter(meal_type=mealType)
-    # else:
-    #     recipe = Recipe.objects.all()
-
-    # recipes = Recipe.objects.all()
-
-    # return render(
-    #     request, "recipes/filter_results.html",
-    #     {'recipes_dict': recipes, 'recipe': recipe,}
-    # )
-
-
-
-'''
-def create_recipe(request):
-    template_name = 'create_recipe.html'
-    if request.method == "GET":
-        form = RecipeForm(request.GET or None)
-        formset = IngredientFormSet(queryset=Ingredient.objects.none())
-    elif request.method == "POST":
-        form = RecipeForm(request.POST)
-        formset = IngredientFormSet(request.POST)
-        if form.is_valid() and formset.is_valid():
-            recipe = form.save()
-            for form in formset:
-                ingredient = form.save(commit=False)
-                ingredient.recipe = recipe.id
-                ingredient.save()
-            return redirect('/')
-    return render(request, template_name, {
-        "form":form,
-        'formset':formset
-    })
-'''
+   

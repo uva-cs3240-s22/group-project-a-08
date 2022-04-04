@@ -7,46 +7,6 @@ from django.core.validators import MinValueValidator
 INTEGER_CHOICES= [tuple([x,x]) for x in range(1,11)]
 
 
-# Recipe Managers
-class RecipeFilterQuerySet(models.QuerySet):
-    # meal type queries
-    def breakfast(self):
-        return self.filter(meal_type='BR')
-
-    def lunch(self):
-        return self.filter(meal_type='LU')
-
-    def dinner(self):
-        return self.filter(meal_type='DI')
-
-    def snack(self):
-        return self.filter(meal_type='SN')
-
-    def other_mt(self):
-        return self.filter(meal_type='OT')
-
-    # difficulty queries
-
-    # dietary queries
-
-class FilterManager(models.Manager):
-    def get_queryset(self):
-        return RecipeFilterQuerySet(self.model, using=self._db)
-
-    def breakfast(self):
-        return self.get_queryset().breakfast()
-
-    def lunch(self):
-        return self.get_queryset().lunch()
-
-    def dinner(self):
-        return self.get_queryset().dinner()
-        
-    def snack(self):
-        return self.get_queryset().snack()
-    
-    def other_mt(self):
-        return self.get_queryset().other_mt()
 
 
 # Create your models here.
@@ -56,7 +16,6 @@ class Recipe(models.Model):
     prep_time = models.IntegerField()
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
-    objects = RecipeFilterQuerySet()
 
     # meal type
     BREAKFAST = 'BR'
@@ -75,6 +34,23 @@ class Recipe(models.Model):
         max_length=2,
         choices=MEAL_TYPE_CHOICES,
         default=OTHER,
+    )
+
+    # dietary restriction
+    VEGETARIAN = 'VE'
+    VEGAN = 'VG'
+    GLUTENFREE = 'GF'
+    NORESTRICTION = 'NR'
+    DIET_CHOICES = [
+        (VEGETARIAN, 'Vegetarian'),
+        (VEGAN, 'Vegan'),
+        (GLUTENFREE, 'Gluten-Free'),
+        (NORESTRICTION, 'No Restriction')
+    ]
+    diet_restriction = models.CharField(
+        max_length=2,
+        choices=DIET_CHOICES,
+        default=NORESTRICTION,
     )
 
     def __str__(self):
