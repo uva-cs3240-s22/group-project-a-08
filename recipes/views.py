@@ -14,6 +14,9 @@ class RecipeListView(generic.ListView):
     template_name = 'recipes/index.html'
     context_object_name = "recipe_list"
 
+class RecipeDetailView(generic.DetailView):
+    model = Recipe
+    template_name = 'recipes/detail.html'
 
 class SearchResultsView(generic.ListView):
     model = Recipe

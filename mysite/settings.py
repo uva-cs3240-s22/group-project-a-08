@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 
-SITE_ID = 1
+SITE_ID = 2
 LOGIN_REDIRECT_URL = "/"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,7 +40,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     'uva-cs3240s22a08-word-of-mouth.herokuapp.com',
     'uva-cs3240s22a08-womt.herokuapp.com',
-    'testserver'
+    'testserver',
 ]
 
 
@@ -87,6 +87,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -198,5 +199,6 @@ try:
     if 'HEROKU' in os.environ:
         import django_heroku
         django_heroku.settings(locals())
+        # SITE_ID = 2
 except ImportError:
     found = False
