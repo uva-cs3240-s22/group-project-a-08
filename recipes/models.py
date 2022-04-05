@@ -12,7 +12,7 @@ INTEGER_CHOICES= [tuple([x,x]) for x in range(1,11)]
 # Create your models here.
 class Recipe(models.Model):
     title = models.CharField(max_length=150)
-    intro = models.TextField()
+    #intro = models.TextField()
     prep_time = models.IntegerField()
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
