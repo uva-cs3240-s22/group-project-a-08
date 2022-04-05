@@ -51,7 +51,7 @@ def filter_recipes(request):
 
     if request.method == "GET":
         query = request.GET.getlist('mealType')
-        print(query)
+        #print(query)
         results1 = Recipe.objects.all()
         results2 = Recipe.objects.all()
         # filtering by meal type

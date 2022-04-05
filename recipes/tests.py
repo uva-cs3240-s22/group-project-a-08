@@ -96,9 +96,15 @@ class RecipeFilterTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No recipes are available.")
 
-    # def test_recipes_available(self):
-    #     response = self.client.get(reverse('recipes:filter')+'?mealType=di')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(len(response.context['result_dict']), 1)
+    def test_recipes_available(self):
+        response = self.client.get(reverse('recipes:filter')+'?mealType=di')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['results']), 2)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('recipes:filter'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Browse Recipes")
+        
 
     
