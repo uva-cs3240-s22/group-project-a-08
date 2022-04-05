@@ -61,18 +61,21 @@
           </nav>
 
         <!-- CREATE RECIPE FORM -->
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                <h1>Upload A Recipe</h1>
+        <div class="d-flex flex-row bd-highlight mb-3 justify-content-evenly">
+    
+            <div class="p-2 bd-highlight"><h1>Upload A Recipe</h1>
+
+            
                 <form action="." method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <br>
                     <br>
+            </div>
 
                     <!-- INGREDIENT FORM -->
-                    <h2>Add Ingredients</h2>
+                <div class="p-2 bd-highlight">
+                    <h1>Add Ingredients</h1>
                     {{ formset.management_form }}
                     <div id="ingredient-form">
                     {% for form in formset %}
@@ -81,12 +84,15 @@
                         </div>
                     {% endfor %}
                     </div>
+                
 
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
-                    <button id="add-ingredient" type="button">Add Ingredient</button>
+                    <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
+                </div>
 
                     <!-- STEP FORM -->
-                    <h2>Add Steps</h2>
+                <div class="p-2 bd-highlight">
+                    <h1>Add Steps</h1>
                     {{ step_formset.management_form }}
                     <div id="step-form">
                     {% for form in step_formset %}
@@ -97,13 +103,14 @@
                     </div>
 
                     <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
-                    <button id="add-step" type="button">Add Step</button>
+                    <button id="add-step" type="button" class="btn btn-success">Add Step</button>
+                </div>
 
-
-
-                    <button type="submit">Submit</button>
-                </form>
+                    <div style="padding-top: 20px;">
+                        <button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button>
                     </div>
+                </form>
+            </div>
 
                 <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->
                 <!-- DYNAMIC ADD INGREDIENT -->
@@ -154,7 +161,6 @@
                             formCopyTarget.append(copyemptyform)
                         }
                     </script>
-            </div>
         </div>
     </body>
 
