@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block content %}
+    <style>
+        .hidden {
+            display: none
+        }
+    </style>
+{% endblock %}
+
+<head>
+        {# Load the tag library #}
+        {% load bootstrap5 %}
+        
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+        <title>Recipe App</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button   class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'recipes:create_recipe' %}">Upload</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Starred</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                <h1>Add A Recipe</h1>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <br>
+
+                    <h2>Add Ingredients</h2>
+                    {{ formset.management_form }}
+                    <div id="ingredient-form">
+                    {% for form in formset %}
+                        <div class="ingredient-form-class">
+                            {{ form.as_p }}
+                        </div>
+                    {% endfor %}
+                    </div>
+
+                    <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
+                    <button id="add-ingredient" type="button">Add Ingredient</button>
+
+
+                    <button type="submit">Submit</button>
+                </form>
+                    </div>
+
+                <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->
+                    <script>
+                        const addIngr = document.getElementById("add-ingredient")
+                        const totalNewForms = document.getElementById("id_ingredients-TOTAL_FORMS")
+                        const currentIngrFormsCount = document.getElementsByClassName('ingredient-form-class')
+
+                        addIngr.addEventListener('click',add_form)
+                        function add_form(args) {
+                            if(event) {
+                                event.preventDefault()
+                            }
+                            const currentIngrFormsCount = document.getElementsByClassName('ingredient-form-class')
+                            const currentFormCount = currentIngrFormsCount.length+1
+
+                            const formCopyTarget = document.getElementById("ingredient-form")
+                            const copyemptyform = document.getElementById("empty-form").cloneNode(true)
+                            copyemptyform.setAttribute('class', 'ingredient-form-class')
+                            copyemptyform.setAttribute('id', `ingredient-form-${currentFormCount}`)
+                            const regex = new RegExp('__prefix__', 'g')
+                            copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
+                            totalNewForms.setAttribute('value', currentFormCount + 1)
+                            formCopyTarget.append(copyemptyform)
+                        }
+                    </script>
+            </div>
+        </div>
+    </body>
+
+</html>
+
+
+<!--h1>Add A Recipe</h1>
+<form class="form-horizontal" method="POST" action="">
+    {% csrf_token %}
+<div class="row spacer">
+<div class="col-2">
+    <label>{{form.name.label}}</label>
+</div>
+<div class="col-4">
+    <div class="input-group">
+        {{form.name}}
+    </div>
+</div>
+</div>
+{{ formset.management_form }}
+{% for form in formset %}
+<div class="row form-row spacer">
+    <div class="col-2">
+        <label>{{form.name.label}}</label>
+    </div>
+    <div class="col-4">
+        <div class="input-group">
+            {{form.name}}
+            <div class="input-group-append">
+                <button class="btn btn-success add-form-row">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div class="row spacer">
+    <div class="col-4 offset-2">
+        <button type="submit" class="btn btn-block btn-primary">Create</button>
+    </div>
+</div>
+</form-->
