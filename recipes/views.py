@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from recipes.models import Ingredient
-from .forms import IngredientFormSet, RecipeForm
+from .forms import IngredientFormSet, RecipeForm, StepFormSet
 from .models import Recipe
 
 
@@ -24,14 +24,18 @@ def create_recipe(request):
     if request.method == "GET":
         form = RecipeForm()
         formset = IngredientFormSet()
-        return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset})
+        step_formset = StepFormSet()
+        return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
     elif request.method == "POST":
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)
+            step_formset = StepFormSet(request.POST, instance=recipe)
             if formset.is_valid():
                 formset.save()
+            if step_formset.is_valid():
+                step_formset.save()
             return redirect('/')
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})

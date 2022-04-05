@@ -6,13 +6,9 @@ from django.core.validators import MinValueValidator
 
 INTEGER_CHOICES= [tuple([x,x]) for x in range(1,11)]
 
-
-
-
 # Create your models here.
 class Recipe(models.Model):
     title = models.CharField(max_length=150)
-    #intro = models.TextField()
     prep_time = models.IntegerField()
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
@@ -61,6 +57,14 @@ class Ingredient(models.Model):
     quantity = models.FloatField(validators=[MinValueValidator(0.0)])
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
+
+    def __str__(self):
+        return self.name
+
+class Step(models.Model):
+    name = models.CharField(max_length=200)
+
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="steps")
 
     def __str__(self):
         return self.name

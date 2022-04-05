@@ -71,6 +71,7 @@
                     <br>
                     <br>
 
+                    <!-- INGREDIENT FORM -->
                     <h2>Add Ingredients</h2>
                     {{ formset.management_form }}
                     <div id="ingredient-form">
@@ -84,12 +85,28 @@
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
                     <button id="add-ingredient" type="button">Add Ingredient</button>
 
+                    <!-- STEP FORM -->
+                    <h2>Add Steps</h2>
+                    {{ step_formset.management_form }}
+                    <div id="step-form">
+                    {% for form in step_formset %}
+                        <div class="step-form-class">
+                            {{ step_form.as_p }}
+                        </div>
+                    {% endfor %}
+                    </div>
+
+                    <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
+                    <button id="add-step" type="button">Add Step</button>
+
+
 
                     <button type="submit">Submit</button>
                 </form>
                     </div>
 
                 <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->
+                <!-- DYNAMIC ADD INGREDIENT -->
                     <script>
                         const addIngr = document.getElementById("add-ingredient")
                         const totalNewForms = document.getElementById("id_ingredients-TOTAL_FORMS")
@@ -107,6 +124,30 @@
                             const copyemptyform = document.getElementById("empty-form").cloneNode(true)
                             copyemptyform.setAttribute('class', 'ingredient-form-class')
                             copyemptyform.setAttribute('id', `ingredient-form-${currentFormCount}`)
+                            const regex = new RegExp('__prefix__', 'g')
+                            copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
+                            totalNewForms.setAttribute('value', currentFormCount + 1)
+                            formCopyTarget.append(copyemptyform)
+                        }
+                    </script>
+                <!-- DYNAMIC ADD STEPS -->
+                    <script>
+                        const addStep = document.getElementById("add-step")
+                        const totalNewForms2 = document.getElementById("id_steps-TOTAL_FORMS")
+                        const currentStepFormsCount = document.getElementsByClassName('step-form-class')
+
+                        addStep.addEventListener('click',add_form2)
+                        function add_form2(args) {
+                            if(event) {
+                                event.preventDefault()
+                            }
+                            const currentStepFormsCount = document.getElementsByClassName('step-form-class')
+                            const currentFormCount = currentStepFormsCount.length+1
+
+                            const formCopyTarget = document.getElementById("step-form")
+                            const copyemptyform = document.getElementById("empty-form2").cloneNode(true)
+                            copyemptyform.setAttribute('class', 'step-form-class')
+                            copyemptyform.setAttribute('id', `step-form-${currentFormCount}`)
                             const regex = new RegExp('__prefix__', 'g')
                             copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
                             totalNewForms.setAttribute('value', currentFormCount + 1)
