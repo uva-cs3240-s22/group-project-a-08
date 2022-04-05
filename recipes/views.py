@@ -77,8 +77,8 @@ def filter_recipes(request):
         if 've' not in query and 'vg' not in query and 'gf' not in query and 'nr' not in query:
             results2 = Recipe.objects.all()
 
-        print(results1)
-        print(results2)
+        #print(results1)
+        #print(results2)
         results = results1.intersection(results2)
         result_dict = {"results": results}
     return render(request, "recipes/filter_results.html", result_dict)
