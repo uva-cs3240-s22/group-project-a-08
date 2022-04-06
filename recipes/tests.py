@@ -14,12 +14,11 @@ class RecipeSearchTests(TestCase):
     def setUp(self):
         test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-        self.results.append(Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2))
+        self.results.append(Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2, meal_type='SN', diet_restriction='NR'))
     
     def test_search_success(self):
         response = self.client.get("/recipes/search/?recipeTitle=Coo")
-        data = '<p class="card-text">Intro: yummy cookies <br>PrepTime: 5 <br>CookTime: 10 <br>Servings: 2 <br></p>'
-        self.assertInHTML(data,response.content.decode())
+        self.assertContains(response, "Cookies")
     
     def test_search_failure(self):
         response = self.client.get("/recipes/search/?recipeTitle=fail")
@@ -28,8 +27,7 @@ class RecipeSearchTests(TestCase):
     
     def test_empty_query(self):
         response = self.client.get("/recipes/search/?recipeTitle=")
-        data = '<p class="card-text">Intro: yummy cookies <br>PrepTime: 5 <br>CookTime: 10 <br>Servings: 2 <br></p>'
-        self.assertInHTML(data,response.content.decode())
+        self.assertContains(response, "Cookies")
         
 # create-form tests
 # status: working
