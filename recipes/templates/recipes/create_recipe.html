@@ -156,7 +156,7 @@
                             copyemptyform.setAttribute('id', `step-form-${currentFormCount}`)
                             const regex = new RegExp('__prefix__', 'g')
                             copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
-                            totalNewForms.setAttribute('value', currentFormCount + 1)
+                            totalNewForms2.setAttribute('value', currentFormCount + 1)
                             formCopyTarget.append(copyemptyform)
                         }
                     </script>
