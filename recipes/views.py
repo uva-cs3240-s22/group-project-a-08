@@ -4,9 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
-# from recipes.models import Ingredient
-from .forms import IngredientFormSet, RecipeForm
-from .models import Recipe, Ingredient
+from recipes.models import Ingredient
+from .forms import IngredientFormSet, RecipeForm, StepFormSet
+from .models import Recipe
 
 
 class RecipeListView(generic.ListView):
@@ -28,14 +28,18 @@ def create_recipe(request):
     if request.method == "GET":
         form = RecipeForm()
         formset = IngredientFormSet()
-        return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset})
+        step_formset = StepFormSet()
+        return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
     elif request.method == "POST":
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)
+            step_formset = StepFormSet(request.POST, instance=recipe)
             if formset.is_valid():
                 formset.save()
+            if step_formset.is_valid():
+                step_formset.save()
             return redirect('/')
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})
@@ -52,7 +56,7 @@ def filter_recipes(request):
 
     if request.method == "GET":
         query = request.GET.getlist('mealType')
-        print(query)
+        #print(query)
         results1 = Recipe.objects.all()
         results2 = Recipe.objects.all()
         # filtering by meal type
@@ -82,8 +86,8 @@ def filter_recipes(request):
         if 've' not in query and 'vg' not in query and 'gf' not in query and 'nr' not in query:
             results2 = Recipe.objects.all()
 
-        print(results1)
-        print(results2)
+        #print(results1)
+        #print(results2)
         results = results1.intersection(results2)
         result_dict = {"results": results}
     return render(request, "recipes/filter_results.html", result_dict)

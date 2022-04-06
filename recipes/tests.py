@@ -8,19 +8,6 @@ from .models import Recipe, Ingredient
 from .forms import RecipeForm, IngredientForm
 
 
-# Create your tests here.
-# class RecipeListTests(TestCase):
-#     def test_no_recipes(self):
-#     # If no questions exist
-#         response = self.client.get(reverse('recipes:all_recipes'))
-#         self.assertQuerysetEqual(response.context['recipe_list'], [])
-    
-#     def test_one_recipe(self):
-#         recipe = Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
-#         response = self.client.get(reverse('recipes:all_recipes'))
-#         self.assertQuerysetEqual(response.context['recipe_list'], [recipe])
-
-
 class RecipeSearchTests(TestCase):
     results = []
 
@@ -44,8 +31,6 @@ class RecipeSearchTests(TestCase):
         data = '<p class="card-text">Intro: yummy cookies <br>PrepTime: 5 <br>CookTime: 10 <br>Servings: 2 <br></p>'
         self.assertInHTML(data,response.content.decode())
         
-
-
 # create-form tests
 # status: working
 # need these next few lines if running tests in VSCode, https://www.youtube.com/watch?v=7RaPq2BnPCI
@@ -59,7 +44,7 @@ setup()
 class RecipeIngredientModelTests(TestCase):
 
     def setUp(self):
-        Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
+        Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
         test_recipe = Recipe.objects.get(title="Cookies")
         Ingredient.objects.create(name='cookie dough', quantity=1.0, recipe = test_recipe)
         Ingredient.objects.create(name='chocolate', quantity=4.5, recipe = test_recipe)
@@ -85,11 +70,11 @@ class RecipeIngredientModelTests(TestCase):
 class FormTests(TestCase):
 
     def test_recipe_form_valid(self):
-        form = RecipeForm(data={'title':"Cookies", 'intro':"yummy cookies", 'prep_time':5, 'cook_time':10, 'servings':2})
+        form = RecipeForm(data={'title':"Cookies", 'prep_time':5, 'cook_time':10, 'servings':2, 'meal_type':'SN', 'diet_restriction':'VE'})
         self.assertTrue(form.is_valid())
 
     def test_recipe_form_invalid(self):
-        form = RecipeForm(data={'title':"", 'intro':"yummy cookies", 'prep_time':5, 'cook_time':10, 'servings':2})
+        form = RecipeForm(data={'title':"", 'prep_time':5, 'cook_time':10, 'servings':2})
         self.assertFalse(form.is_valid())
     
 class RecipeListViewTest(TestCase):
@@ -101,7 +86,7 @@ class RecipeListViewTest(TestCase):
         test_user1.save()
         test_user2.save()
 
-        Recipe.objects.create(title="Cookies",intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
+        Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
         test_recipe = Recipe.objects.get(title="Cookies")
         Ingredient.objects.create(name='cookie dough', quantity=1.0, recipe = test_recipe)
         Ingredient.objects.create(name='chocolate', quantity=4.5, recipe = test_recipe)
@@ -114,14 +99,29 @@ class RecipeListViewTest(TestCase):
         response = self.client.get(reverse('recipes:create_recipe'))
         self.assertRedirects(response, '/?next=/recipes/create/')
 
-    # def test_logged_in_uses_correct_template(self):
-    #     login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-    #     response = self.client.get(reverse('recipes:create_recipe'))
+class RecipeFilterTests(TestCase):
 
-    #     # Check our user is logged in
-    #     self.assertEqual(str(response.context['user']), 'testuser1')
-    #     # Check that we got a response "success"
-    #     self.assertEqual(response.status_code, 200)
+    def setUp(self):
+        Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2, meal_type='SN', diet_restriction = 'NR')
+        Recipe.objects.create(title="Vegetarian Pizza", prep_time=5, cook_time=10, servings=2, meal_type='DI', diet_restriction = 'VE')
+        Recipe.objects.create(title="Gluten Free Cake", prep_time=5, cook_time=10, servings=2, meal_type='OT', diet_restriction = 'GF')
+        Recipe.objects.create(title="Vegan Dinner", prep_time=5, cook_time=10, servings=2, meal_type='DI', diet_restriction = 'VG')
+        test_recipe = Recipe.objects.get(title="Cookies")
+    
+    def test_no_recipes(self):
+        response = self.client.get(reverse('recipes:filter')+'?mealType=lu&mealType=gf')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No recipes are available.")
 
-    #     # Check we used correct template
-    #     self.assertTemplateUsed(response, 'recipes/create_recipe.html')
+    def test_recipes_available(self):
+        response = self.client.get(reverse('recipes:filter')+'?mealType=di')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['results']), 2)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('recipes:filter'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Browse Recipes")
+        
+
+    

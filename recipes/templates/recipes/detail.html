@@ -64,6 +64,7 @@
                 <div class="col-2">
                     <h2 style="font-size: 25px">Ingredients</h2>
                     <div>
+                      {{recipe.ingredients}}
                         <ul>
                             {% for ingredient in recipe.ingredients.all %}
                                 <li>{{ingredient.name}} {{ingredient.quantity}}</li>
