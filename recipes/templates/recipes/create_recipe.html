@@ -61,9 +61,8 @@
           </nav>
 
         <!-- CREATE RECIPE FORM -->
-        <div class="d-flex flex-row bd-highlight mb-3 justify-content-evenly">
     
-            <div class="p-2 bd-highlight"><h1>Upload A Recipe</h1>
+            <h1>Upload A Recipe</h1>
 
             
                 <form action="." method="post">
@@ -71,10 +70,10 @@
                     {{ form.as_p }}
                     <br>
                     <br>
-            </div>
+            
 
                     <!-- INGREDIENT FORM -->
-                <div class="p-2 bd-highlight">
+                
                     <h1>Add Ingredients</h1>
                     {{ formset.management_form }}
                     <div id="ingredient-form">
@@ -88,10 +87,10 @@
 
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
                     <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
-                </div>
+                
 
                     <!-- STEP FORM -->
-                <div class="p-2 bd-highlight">
+                    
                     <h1>Add Steps</h1>
                     {{ step_formset.management_form }}
                     <div id="step-form">
@@ -104,13 +103,13 @@
 
                     <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
                     <button id="add-step" type="button" class="btn btn-success">Add Step</button>
-                </div>
+                
 
-                    <div style="padding-top: 20px;">
-                        <button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button>
-                    </div>
+                    
+                    <button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button>
+                    
                 </form>
-            </div>
+            
 
                 <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->
                 <!-- DYNAMIC ADD INGREDIENT -->
@@ -157,11 +156,11 @@
                             copyemptyform.setAttribute('id', `step-form-${currentFormCount}`)
                             const regex = new RegExp('__prefix__', 'g')
                             copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
-                            totalNewForms.setAttribute('value', currentFormCount + 1)
+                            totalNewForms2.setAttribute('value', currentFormCount + 1)
                             formCopyTarget.append(copyemptyform)
                         }
                     </script>
-        </div>
+        
     </body>
 
 </html>
