@@ -1,10 +1,12 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from recipes.models import Ingredient
+from users.models import UserProfile
 from .forms import IngredientFormSet, RecipeForm, StepFormSet
 from .models import Recipe
 
@@ -43,6 +45,13 @@ def create_recipe(request):
             return redirect('/')
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})
+
+@login_required(login_url='/')
+def save_recipe(request, pk):
+    user = UserProfile.objects.get(user = request.user)
+    recipe = get_object_or_404(Recipe, id=pk)
+    user.saved.add(recipe)
+    return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
 
 @login_required(login_url='/')
 def search_recipes(request):
