@@ -1,3 +1,5 @@
+##Reference: https://www.youtube.com/watch?v=Alua227cOmY
+
 from django.db import models
 from django.contrib.auth.models import User
 from recipes.models import Recipe
