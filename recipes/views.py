@@ -25,6 +25,11 @@ class SearchResultsView(generic.ListView):
     template_name = 'recipes/search_results.html'
     context_object_name = "results_list"
 
+class SavedListView(generic.ListView):
+    model = Recipe
+    template_name = 'recipes/saved_recipes.html'
+    context_object_name = "saved_list"
+
 @login_required(login_url='/')
 def create_recipe(request):
     if request.method == "GET":
