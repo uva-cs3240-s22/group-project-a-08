@@ -5,6 +5,7 @@ from django.urls import reverse
 # source: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Testing
 
 from .models import Recipe, Ingredient
+from users.models import UserProfile
 from .forms import RecipeForm, IngredientForm
 
 
@@ -127,4 +128,35 @@ class RecipeDetailViewTests(TestCase):
         url = reverse('recipes:detail', args=(recipe.id,))
         response = self.client.get(url)
         self.assertContains(response, recipe.title)
+
+class SavedRecipeTests(TestCase):
+    def setUp(self):
+        test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
+        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
+        profile = UserProfile.objects.create(user=test_user1, )
+        Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        Recipe.objects.create(title="Pancakes", prep_time=10, cook_time=30, servings=4)
+
+    def test_save_recipe(self):
+        save_response = self.client.get("/recipes/1/save")
+        url = reverse('recipes:saved_recipes')
+        page_response = self.client.get(url)
+        self.assertContains(page_response, "Cookies")
     
+    def test_not_saved_recipe(self):
+        save_response = self.client.get("/recipes/1/save")
+        url = reverse('recipes:saved_recipes')
+        page_response = self.client.get(url)
+        self.assertNotContains(page_response, "Pancakes")
+
+    def test_unsave_recipe(self):
+        save_response = self.client.get("/recipes/1/save")
+        save_response = self.client.get("/recipes/1/unsave")
+        url = reverse('recipes:saved_recipes')
+        page_response = self.client.get(url)
+        self.assertNotContains(page_response, "Cookies")
+    
+    def test_no_saved_recipes(self):
+        url = reverse('recipes:saved_recipes')
+        page_response = self.client.get(url)
+        self.assertContains(page_response, "No recipes saved yet")

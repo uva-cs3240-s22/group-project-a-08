@@ -59,6 +59,13 @@ def save_recipe(request, pk):
     return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
 
 @login_required(login_url='/')
+def unsave_recipe(request, pk):
+    user = UserProfile.objects.get(user = request.user)
+    recipe = get_object_or_404(Recipe, id=pk)
+    user.saved.remove(recipe)
+    return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
+
+@login_required(login_url='/')
 def search_recipes(request):
     if request.method == "GET":
         query = request.GET["recipeTitle"]

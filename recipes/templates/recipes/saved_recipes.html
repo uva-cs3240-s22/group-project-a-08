@@ -54,8 +54,9 @@
           <div class="px-5 pt-3">
               Hi {{user.username}}
 
-              <div class="row">
-                {% for recipe in user.userprofile.saved.all %}
+              {% if user.userprofile.saved.all %}
+                <div class="row">
+                  {% for recipe in user.userprofile.saved.all %}
                     <div class="col-2">
                         <div class="card">  
                             <img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="...">
@@ -71,11 +72,14 @@
                         </div>
                     </div>
                     {% if forloop.counter|divisibleby:3 %}
-              </div>
-              <div class="row">
+                </div>
+                <div class="row">
                     {% endif %}
-                {% endfor %}
-              </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div>No recipes saved yet</div>
+              {% endif %}
           </div>
 
           <div class="row">
