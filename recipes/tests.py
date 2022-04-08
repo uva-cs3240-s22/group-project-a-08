@@ -121,5 +121,10 @@ class RecipeFilterTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Browse Recipes")
         
-
+class RecipeDetailViewTests(TestCase):
+    def test_recipe(self):
+        recipe = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2, meal_type='SN', diet_restriction='NR')
+        url = reverse('recipes:detail', args=(recipe.id,))
+        response = self.client.get(url)
+        self.assertContains(response, recipe.title)
     
