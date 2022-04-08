@@ -1,3 +1,5 @@
+## reference: https://docs.djangoproject.com/en/4.0/ref/request-response/
+
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
@@ -63,7 +65,11 @@ def unsave_recipe(request, pk):
     user = UserProfile.objects.get(user = request.user)
     recipe = get_object_or_404(Recipe, id=pk)
     user.saved.remove(recipe)
-    return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
+    print(request.META.get('HTTP_REFERER'))
+    if "saved" in request.META.get("HTTP_REFERER"):
+        return HttpResponseRedirect(reverse('recipes:saved_recipes'))
+    else:
+        return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
 
 @login_required(login_url='/')
 def search_recipes(request):
