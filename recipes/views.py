@@ -1,10 +1,14 @@
-from django.shortcuts import redirect, render
+## reference: https://docs.djangoproject.com/en/4.0/ref/request-response/
+
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from recipes.models import Ingredient
+from users.models import UserProfile
 from .forms import IngredientFormSet, RecipeForm, StepFormSet
 from .models import Recipe
 
@@ -22,6 +26,11 @@ class SearchResultsView(generic.ListView):
     model = Recipe
     template_name = 'recipes/search_results.html'
     context_object_name = "results_list"
+
+class SavedListView(generic.ListView):
+    model = Recipe
+    template_name = 'recipes/saved_recipes.html'
+    context_object_name = "saved_list"
 
 @login_required(login_url='/')
 def create_recipe(request):
@@ -43,6 +52,24 @@ def create_recipe(request):
             return redirect('/')
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})
+
+@login_required(login_url='/')
+def save_recipe(request, pk):
+    user = UserProfile.objects.get(user = request.user)
+    recipe = get_object_or_404(Recipe, id=pk)
+    user.saved.add(recipe)
+    return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
+
+@login_required(login_url='/')
+def unsave_recipe(request, pk):
+    user = UserProfile.objects.get(user = request.user)
+    recipe = get_object_or_404(Recipe, id=pk)
+    user.saved.remove(recipe)
+    print(request.META.get('HTTP_REFERER'))
+    if "saved" in request.META.get("HTTP_REFERER"):
+        return HttpResponseRedirect(reverse('recipes:saved_recipes'))
+    else:
+        return HttpResponseRedirect(reverse('recipes:detail', args=(pk,)))
 
 @login_required(login_url='/')
 def search_recipes(request):
