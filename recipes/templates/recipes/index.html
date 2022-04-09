@@ -123,7 +123,8 @@
                 {% if recipe_list %}
                     {% for recipe in recipe_list %}
                       <div class="card col-3">  
-                        <img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="...">
+                        <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
+                        <img src="{{ recipe.upload.url }}"/>
                         <div class="card-body">
                           <h5 class="card-title">{{ recipe.title }}</h5>
                           <p class="card-text">
