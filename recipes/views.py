@@ -14,6 +14,7 @@ class RecipeListView(generic.ListView):
     template_name = 'recipes/index.html'
     context_object_name = "recipe_list"
 
+
 class SearchResultsView(generic.ListView):
     model = Recipe
     template_name = 'recipes/search_results.html'
@@ -26,7 +27,7 @@ def create_recipe(request):
         formset = IngredientFormSet()
         return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset})
     elif request.method == "POST":
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)

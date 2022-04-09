@@ -8,6 +8,7 @@ from .models import Recipe, Ingredient
 from .forms import RecipeForm, IngredientForm
 
 
+
 # Create your tests here.
 class RecipeListTests(TestCase):
     def test_no_recipes(self):

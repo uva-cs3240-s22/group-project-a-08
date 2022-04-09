@@ -13,6 +13,7 @@ class Recipe(models.Model):
     prep_time = models.IntegerField()
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
+    upload = models.ImageField(upload_to='media/', blank=True)
 
     def __str__(self):
         return self.title
