@@ -20,6 +20,7 @@ from pathlib import Path
 
 SITE_ID = 2
 LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,6 +72,7 @@ INSTALLED_APPS = [
     # Sub apps
     "home",
     "recipes",
+    "users",
 ]
 
 # Use FOR OAuth
@@ -194,24 +196,23 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 
-AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID           = os.environ["AWS_ACCESS_KEY_ID"]                   if "AWS_ACCESS_KEY_ID"          in os.environ else ""
+AWS_SECRET_ACCESS_KEY       = os.environ["AWS_SECRET_ACCESS_KEY"]               if "AWS_SECRET_ACCESS_KEY"      in os.environ else ""
+AWS_STORAGE_BUCKET_NAME     = os.environ["AWS_STORAGE_BUCKET_NAME"]             if "AWS_STORAGE_BUCKET_NAME"    in os.environ else ""
+AWS_S3_CUSTOM_DOMAIN        = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE       = False
+AWS_DEFAULT_ACL             = None
 
-AWS_S3_OBJECT_PARAMETERS = {
+AWS_S3_OBJECT_PARAMETERS    = {
     'CacheControl': 'max-age=86400',
 }
 
-AWS_LOCATION = 'static'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+AWS_LOCATION                = 'static'
+STATICFILES_STORAGE         = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL                  = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
-DEFAULT_FILE_STORAGE = 'mysite.storage_backends.MediaStorage'
-
+DEFAULT_FILE_STORAGE        = 'mysite.storage_backends.MediaStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
