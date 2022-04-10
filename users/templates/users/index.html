@@ -1,0 +1,62 @@
+{{user.username}}
+{{user.userprofile.saved.all}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- {# Load the tag library #} -->
+        {% load bootstrap5 %}
+        
+        <!-- {# Load CSS and JavaScript #} -->
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        
+        <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
+        {% bootstrap_messages %}
+    
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+        <title>Results</title>
+    </head>
+
+    <body>
+
+      <!-- NAVBAR -->
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Word of Mouth</a>
+              <button   class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'recipes:create_recipe' %}">Upload</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipes:saved' %}">Starred</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:myprofile' %}">Profile</a>
+                  </li>
+                </ul>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </div>
+            </div>
+          </nav>
+
+
+          </div>
+    </body>
+
+</html>

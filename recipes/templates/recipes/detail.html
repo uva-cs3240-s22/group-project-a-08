@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <!-- {# Load the tag library #} -->
+        {% load bootstrap5 %}
+        
+        <!-- {# Load CSS and JavaScript #} -->
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        
+        <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
+        {% bootstrap_messages %}
+    
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'recipes/styles.css' %}">
+        <title>Recipe</title>
+    </head>
+
+    <body style="padding-bottom: 30px;">
+
+        <!-- NAVBAR -->
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Word of Mouth</a>
+              <button   class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'recipes:create_recipe' %}">Upload</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Starred</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                  </li>
+                </ul>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </div>
+            </div>
+        </nav>
+
+        <div class="py-3 px-5">
+            <h1>{{recipe.title}}</h1>
+            <div class="row">
+              <p class="col-11">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
+              {% if recipe in user.userprofile.saved.all %}
+                <a class="btn btn-primary col-1" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Unsave</a>
+              {% else %}
+                <a class="btn btn-primary col-1" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Save</a>
+              {% endif %}
+            </div>
+            <hr/>
+
+            <div class="row">
+                <div class="col-2">
+                    <h2 style="font-size: 25px">Ingredients</h2>
+                    <div>
+                        <ul>
+                            {% for ingredient in recipe.ingredients.all %}
+                                <li>{{ingredient.name}} {{ingredient.quantity}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <h2 style="font-size: 25px">Directions</h2>
+                    <div>
+                      <ol>
+                          {% for step in recipe.steps.all %}
+                              <li>{{step.name}}</li>
+                          {% endfor %}
+                      </ol>
+                  </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+    </body>
+
+</html>
