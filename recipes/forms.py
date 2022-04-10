@@ -1,5 +1,5 @@
 from django import forms
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, Step
 from django.forms import DurationField, modelformset_factory # dynamic
 
 
@@ -14,28 +14,10 @@ class IngredientForm(forms.ModelForm):
         model = Ingredient
         exclude = ('recipe',)
 
+class StepForm(forms.ModelForm):
+    class Meta:
+        model = Step
+        exclude = ('recipe',)
+
 IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=0)
-
-
-
-'''
-IngredientFormSet = modelformset_factory(
-    Ingredient,
-    fields=('name', 'quantity', ),
-    extra=3,
-    widgets={
-        'name': forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter Ingredient Name here'
-            }
-        ),
-        'quantity': forms.NumberInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter Quantity here'
-            }
-        )
-    }
-)
-'''
+StepFormSet = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=0)
