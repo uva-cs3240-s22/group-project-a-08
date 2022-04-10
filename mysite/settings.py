@@ -42,6 +42,8 @@ ALLOWED_HOSTS = [
     'uva-cs3240s22a08-word-of-mouth.herokuapp.com',
     'uva-cs3240s22a08-womt.herokuapp.com',
     'testserver',
+    
+    'womt-image-api-test.herokuapp.com',
 ]
 
 
