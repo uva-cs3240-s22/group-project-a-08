@@ -72,11 +72,19 @@
                             <div class="card-body">
                                 <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a></h5>
                                 <p class="card-text">
-                                  PrepTime: {{ recipe.prep_time }} <br>
-                                  CookTime: {{ recipe.cook_time }} <br>
+                                  PrepTime: {{ recipe.prep_time }} mins<br>
+                                  CookTime: {{ recipe.cook_time }} mins<br>
                                   Servings: {{ recipe.servings }} <br>
-                                  Meal Type: {{ recipe.meal_type }} <br>
-                                  Diet Restriction: {{ recipe.diet_restriction }} <br>
+                                  
+                                  {% if recipe.diet_restriction == 'VG' %}
+                                  <span class="badge rounded-pill bg-success">VEGAN</span>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'VE' %}
+                                  <span class="badge rounded-pill bg-warning">VEGETARIAN</span>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'GF' %}
+                                  <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
+                                  {% endif %}
                                 </p>
                             </div>
                         </div>
