@@ -42,7 +42,7 @@
                     <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Starred</a>
+                    <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
@@ -54,13 +54,13 @@
         </nav>
 
         <div class="py-3 px-5">
-            <h1>{{recipe.title}}</h1>
+            <h1>{{recipe.title|capfirst}}</h1>
             <div class="row">
               <p class="col-11">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
               {% if recipe in user.userprofile.saved.all %}
-                <a class="btn btn-primary col-1" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Unsave</a>
+                <a class="btn btn-danger col-1" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Favorite</a>
               {% else %}
-                <a class="btn btn-primary col-1" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Save</a>
+                <a class="btn btn-danger col-1" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Unfavorite</a>
               {% endif %}
             </div>
             <hr/>

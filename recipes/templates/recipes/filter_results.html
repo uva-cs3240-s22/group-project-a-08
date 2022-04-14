@@ -41,7 +41,7 @@
                     <a class="nav-link active" href="{% url 'recipes:all_recipes' %}">Recipes</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Starred</a>
+                    <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
@@ -181,13 +181,21 @@
                             <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                             <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
                             <div class="card-body">
-                              <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a></h5>
+                              <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
                               <p class="card-text">
-                                PrepTime: {{ recipe.prep_time }} <br>
-                                CookTime: {{ recipe.cook_time }} <br>
+                                PrepTime: {{ recipe.prep_time }} mins<br>
+                                CookTime: {{ recipe.cook_time }} mins<br>
                                 Servings: {{ recipe.servings }} <br>
-                                Meal Type: {{ recipe.meal_type }} <br>
-                                Diet Restriction: {{ recipe.diet_restriction }} <br>
+                                
+                                {% if recipe.diet_restriction == 'VG' %}
+                                <span class="badge rounded-pill bg-success">VEGAN</span>
+                                {% endif %}
+                                {% if recipe.diet_restriction == 'VE' %}
+                                <span class="badge rounded-pill bg-warning">VEGETARIAN</span>
+                                {% endif %}
+                                {% if recipe.diet_restriction == 'GF' %}
+                                <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
+                                {% endif %}
                               </p>
                             </div>
                           </div>
