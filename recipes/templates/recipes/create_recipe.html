@@ -59,13 +59,11 @@
               </div>
             </div>
           </nav>
-
-        <!-- CREATE RECIPE FORM -->
-    
-            <h1>Upload A Recipe</h1>
-
-            
-                <form action="." method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                <h1>Add A Recipe</h1>
+                <form action="." method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
                     {{ form.as_p }}
                     <br>

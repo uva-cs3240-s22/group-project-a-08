@@ -40,7 +40,7 @@ def create_recipe(request):
         step_formset = StepFormSet()
         return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
     elif request.method == "POST":
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)

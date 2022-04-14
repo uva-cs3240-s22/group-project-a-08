@@ -9,6 +9,21 @@ from users.models import UserProfile
 from .forms import RecipeForm, IngredientForm
 
 
+
+# Create your tests here.
+class RecipeListTests(TestCase):
+    def test_no_recipes(self):
+    # If no questions exist
+        response = self.client.get(reverse('recipes:all_recipes'))
+        self.assertQuerysetEqual(response.context['recipe_list'], [])
+    
+    def test_one_recipe(self):
+        # recipe = Recipe.objects.create(title="Cookies", intro="yummy cookies", prep_time=5, cook_time=10, servings=2)
+        recipe = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        response = self.client.get(reverse('recipes:all_recipes'))
+        self.assertQuerysetEqual(response.context['recipe_list'], [recipe])
+
+
 class RecipeSearchTests(TestCase):
     results = []
 
@@ -133,7 +148,7 @@ class SavedRecipeTests(TestCase):
     def setUp(self):
         test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-        profile = UserProfile.objects.create(user=test_user1, )
+        #profile = UserProfile.objects.create(user=test_user1, )
         Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
         Recipe.objects.create(title="Pancakes", prep_time=10, cook_time=30, servings=4)
         # cookie = Recipe.objects.get(title = "Cookies")
@@ -163,3 +178,37 @@ class SavedRecipeTests(TestCase):
         url = reverse('recipes:saved_recipes')
         page_response = self.client.get(url)
         self.assertContains(page_response, "No recipes saved yet")
+
+# # use assertEqual or assertNotEqual to see if the picture you chose matches or doesn't match the picture in the recipe
+# class RecipeImageTests(TestCase):
+#     def setUp(self):
+#         Recipe.objects.create(title="Cookies",  prep_time=5,    cook_time=10, servings=2, upload="cookie.png")
+#         Recipe.objects.create(title="Pancakes", prep_time=10,   cook_time=20, servings=4, upload="")
+
+#     def test_save_image(self):
+#         recipe  = Recipe.objects.get(title="Cookies")
+#         self.assertEqual(recipe.upload.url, "%s.s3.amazonaws.com/media/media/cookie.png" % os.environ["AWS_STORAGE_BUCKET_NAME"])
+
+#     def test_no_save_image(self):
+#         recipe  = Recipe.objects.get(title="Cookies")
+#         self.assertEqual(recipe.upload.url, "%s.s3.amazonaws.com/media/static%20'stock.jpg'" % os.environ["AWS_STORAGE_BUCKET_NAME"])
+
+"""
+class RecipeIngredientModelTests(TestCase):
+
+    def setUp(self):
+        Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        test_recipe = Recipe.objects.get(title="Cookies")
+        Ingredient.objects.create(name='cookie dough', quantity=1.0, recipe = test_recipe)
+        Ingredient.objects.create(name='chocolate', quantity=4.5, recipe = test_recipe)
+
+    def tearDown(self):
+        # Clean up run after every test method.
+        pass
+
+    
+    def test_str_method_recipe(self):
+        recipe = Recipe.objects.get(title="Cookies")
+        self.assertEqual(str(recipe), recipe.title)
+
+"""
