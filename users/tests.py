@@ -14,6 +14,6 @@ class UserProfileModelTests(TestCase):
     
     def test_str_method(self):
         test_user1 = User.objects.create_user(username='testuser1', password='1X<ISRUkw+tuK')
-        profile = UserProfile.objects.create(user=test_user1, )
+        profile = UserProfile.objects.get(user=test_user1)
         Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
         self.assertEqual(str(profile), test_user1.username)
