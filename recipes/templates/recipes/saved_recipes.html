@@ -52,9 +52,9 @@
             </div>
           </nav>
 
-          <div class="px-5 pt-3">
-              Hi {{user.username}}
+          <h1 class="mt-3 text-center">{{ user.username|capfirst}}'s Favorite Recipes</h1>
 
+          <div class="px-5 pt-3">
               {% if user.userprofile.saved.all %}
                 <div class="row">
                   {% for recipe in user.userprofile.saved.all %}
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    {% if forloop.counter|divisibleby:3 %}
+                    {% if forloop.counter|divisibleby:6 %}
                 </div>
                 <div class="row">
                     {% endif %}
