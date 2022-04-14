@@ -54,7 +54,7 @@
         </nav>
 
         <div class="py-3 px-5">
-            <h1>{{recipe.title}}</h1>
+            <h1>{{recipe.title|capfirst}}</h1>
             <div class="row">
               <p class="col-11">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
               {% if recipe in user.userprofile.saved.all %}

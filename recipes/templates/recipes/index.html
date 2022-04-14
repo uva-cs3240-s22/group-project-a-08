@@ -165,7 +165,7 @@
                       <div class="card">  
                         <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                         <div class="card-body">
-                          <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a></h5>
+                          <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
                           <p class="card-text">
                             PrepTime: {{ recipe.prep_time }} mins<br>
                             CookTime: {{ recipe.cook_time }} mins<br>
