@@ -120,5 +120,27 @@ def filter_recipes(request):
     return render(request, "recipes/filter_results.html", result_dict)
 
 
+@login_required(login_url='/')
+def fork_recipe(request):
+    if request.method == "GET":
+        form = RecipeForm()
+        formset = IngredientFormSet()
+        step_formset = StepFormSet()
+        return render(request, 'recipes/fork_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
+    elif request.method == "POST":
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save()
+            formset = IngredientFormSet(request.POST, instance=recipe)
+            step_formset = StepFormSet(request.POST, instance=recipe)
+            if formset.is_valid():
+                formset.save()
+            if step_formset.is_valid():
+                step_formset.save()
+            return redirect('/recipes/')
+        else:
+            return render(request, 'recipes/fork_recipe.html', {"form":form})
+
+
 
    

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block content %}
+    <style>
+        .hidden {
+            display: none
+        }
+    </style>
+{% endblock %}
+
+<head>
+        {# Load the tag library #}
+        {% load bootstrap5 %}
+
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+        <title>Upload Recipe</title>
+    </head>
+
+    <body style="padding-bottom: 30px;">
+
+        <!-- NAVBAR -->
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Word of Mouth</a>
+              <button   class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'recipes:create_recipe' %}">Upload</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                  </li>
+                </ul>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </div>
+            </div>
+          </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                <h1>Add A Recipe</h1>
+                <form action="." method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+
+                    <!-- INGREDIENT FORM -->
+
+                    <h1>Add Ingredients</h1>
+                    {{ formset.management_form }}
+                    <div id="ingredient-form">
+                    {% for form in formset %}
+                        <div class="ingredient-form-class">
+                            {{ form.as_p }}
+                        </div>
+                    {% endfor %}
+                    </div>
+
+
+                    <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
+                    <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
+
+                    <br>
+                    <br>
+                    <!-- STEP FORM -->
+
+                    <h1>Add Steps</h1>
+                    {{ step_formset.management_form }}
+                    <div id="step-form">
+                    {% for form in step_formset %}
+                        <div class="step-form-class">
+                            {{ step_form.as_p }}
+                        </div>
+                    {% endfor %}
+                    </div>
+
+                    <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
+                    <button id="add-step" type="button" class="btn btn-success">Add Step</button>
+
+
+
+                    <p style="padding-top: 10px;"><button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button></p>
+
+                </form>
+                </div>
+            </div>
+        </div>
+
+
+                <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->
+                <!-- DYNAMIC ADD INGREDIENT -->
+                    <script>
+                        const addIngr = document.getElementById("add-ingredient")
+                        const totalNewForms = document.getElementById("id_ingredients-TOTAL_FORMS")
+                        const currentIngrFormsCount = document.getElementsByClassName('ingredient-form-class')
+
+                        addIngr.addEventListener('click',add_form)
+                        function add_form(args) {
+                            if(event) {
+                                event.preventDefault()
+                            }
+                            const currentIngrFormsCount = document.getElementsByClassName('ingredient-form-class')
+                            const currentFormCount = currentIngrFormsCount.length+1
+
+                            const formCopyTarget = document.getElementById("ingredient-form")
+                            const copyemptyform = document.getElementById("empty-form").cloneNode(true)
+                            copyemptyform.setAttribute('class', 'ingredient-form-class')
+                            copyemptyform.setAttribute('id', `ingredient-form-${currentFormCount}`)
+                            const regex = new RegExp('__prefix__', 'g')
+                            copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
+                            totalNewForms.setAttribute('value', currentFormCount + 1)
+                            formCopyTarget.append(copyemptyform)
+                        }
+                    </script>
+                <!-- DYNAMIC ADD STEPS -->
+                    <script>
+                        const addStep = document.getElementById("add-step")
+                        const totalNewForms2 = document.getElementById("id_steps-TOTAL_FORMS")
+                        const currentStepFormsCount = document.getElementsByClassName('step-form-class')
+
+                        addStep.addEventListener('click',add_form2)
+                        function add_form2(args) {
+                            if(event) {
+                                event.preventDefault()
+                            }
+                            const currentStepFormsCount = document.getElementsByClassName('step-form-class')
+                            const currentFormCount = currentStepFormsCount.length+1
+
+                            const formCopyTarget = document.getElementById("step-form")
+                            const copyemptyform = document.getElementById("empty-form2").cloneNode(true)
+                            copyemptyform.setAttribute('class', 'step-form-class')
+                            copyemptyform.setAttribute('id', `step-form-${currentFormCount}`)
+                            const regex = new RegExp('__prefix__', 'g')
+                            copyemptyform.innerHTML = copyemptyform.innerHTML.replace(regex, currentFormCount)
+                            totalNewForms2.setAttribute('value', currentFormCount + 1)
+                            formCopyTarget.append(copyemptyform)
+                        }
+                    </script>
+
+    </body>
+
+</html>
