@@ -67,9 +67,7 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <br>
-                    <br>
-            
-
+                    
                     <!-- INGREDIENT FORM -->
                 
                     <h1>Add Ingredients</h1>
@@ -86,7 +84,8 @@
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
                     <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
                 
-
+                    <br>
+                    <br>
                     <!-- STEP FORM -->
                     
                     <h1>Add Steps</h1>
@@ -104,9 +103,12 @@
                 
 
                     
-                    <button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button>
+                    <p style="padding-top: 10px;"><button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button></p>
                     
                 </form>
+                </div>
+            </div>
+        </div>
             
 
                 <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->

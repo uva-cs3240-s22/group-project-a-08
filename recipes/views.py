@@ -49,7 +49,7 @@ def create_recipe(request):
                 formset.save()
             if step_formset.is_valid():
                 step_formset.save()
-            return redirect('/')
+            return redirect('/recipes/')
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})
 
