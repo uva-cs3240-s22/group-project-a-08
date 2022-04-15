@@ -7,6 +7,7 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = '__all__'
+        exclude = ('is_forked','forked_id')
 
 
 class IngredientForm(forms.ModelForm):

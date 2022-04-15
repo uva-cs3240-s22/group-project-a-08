@@ -13,6 +13,8 @@ class Recipe(models.Model):
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
     upload = models.ImageField(upload_to='media/', blank=True, default="static 'stock.jpg'")
+    forked_id = models.IntegerField(default=0)
+    is_forked = models.IntegerField(default=0) # 0 if recipe is original, 1 if forked
 
     # meal type
     BREAKFAST = 'BR'

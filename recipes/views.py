@@ -1,5 +1,6 @@
 ## reference: https://docs.djangoproject.com/en/4.0/ref/request-response/
 
+from django import forms
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 from recipes.models import Ingredient
 from users.models import UserProfile
-from .forms import IngredientFormSet, RecipeForm, StepFormSet
-from .models import Recipe
+from .forms import IngredientForm, IngredientFormSet, RecipeForm, StepForm, StepFormSet
+from .models import Recipe, Step
 
 
 class RecipeListView(generic.ListView):
@@ -121,16 +122,28 @@ def filter_recipes(request):
 
 
 @login_required(login_url='/')
-def fork_recipe(request):
+def fork_recipe(request,pk):
     if request.method == "GET":
-        form = RecipeForm()
-        formset = IngredientFormSet()
-        step_formset = StepFormSet()
+        original_recipe = Recipe.objects.get(pk = pk)
+        original_ingreds = Ingredient.objects.get_queryset().filter(recipe = original_recipe)
+        original_steps = Step.objects.get_queryset().filter(recipe = original_recipe)
+        form = RecipeForm(instance=original_recipe)
+        #print(original_steps)
+        IngredientFormSet2 = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=original_ingreds.count())
+        formset = IngredientFormSet2(initial=[{'name': x.name, 'quantity': x.quantity} for x in original_ingreds])
+        #print(original_steps.count())
+        StepFormSet2 = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=original_steps.count())
+        step_formset = StepFormSet2(initial=[{'name': x.name} for x in original_steps])
+        #print(formset)
+        #print(step_formset)
+
         return render(request, 'recipes/fork_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
     elif request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save()
+            recipe.is_forked = 1
+            recipe.forked_id = pk
             formset = IngredientFormSet(request.POST, instance=recipe)
             step_formset = StepFormSet(request.POST, instance=recipe)
             if formset.is_valid():
