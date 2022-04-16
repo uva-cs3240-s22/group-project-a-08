@@ -181,7 +181,7 @@
                             <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                             <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
                             <div class="card-body">
-                              <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
+                              <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
                               <p class="card-text">
                                 PrepTime: {{ recipe.prep_time }} mins<br>
                                 CookTime: {{ recipe.cook_time }} mins<br>

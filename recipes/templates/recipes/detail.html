@@ -154,7 +154,7 @@
                           <div class="carousel-item active">
                             <img src="{{ rec.upload.url }}" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                              <h5>{{rec.title|capfirst}}</h5>
+                              <a href="{% url 'recipes:detail' rec.id%}" class="link-light" style="text-decoration: none;"><h5>{{rec.title|capfirst}}</h5></a>
                               <p>Prep Time: {{rec.prep_time}} min |  Cook Time: {{rec.cook_time}} min |  Servings: {{rec.servings}}</p>
                             </div>
                           </div>
@@ -162,7 +162,7 @@
                           <div class="carousel-item">
                             <img src="{{ rec.upload.url }}" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                              <h5>{{rec.title|capfirst}}</h5>
+                              <a href="{% url 'recipes:detail' rec.id%}" class="link-light" style="text-decoration: none;"><h5>{{rec.title|capfirst}}</h5></a>
                               <p>Prep Time: {{rec.prep_time}} min |  Cook Time: {{rec.cook_time}} min |  Servings: {{rec.servings}}</p>
                             </div>
                           </div>
