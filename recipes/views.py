@@ -22,9 +22,6 @@ class RecipeListView(generic.ListView):
 class RecipeDetailView(generic.DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
-    # def get_forked(self):
-    #     #return Recipe.objects.filter(is_forked = 1, forked_id = self.id)
-    #     return Recipe.objects.all()
 
 class SearchResultsView(generic.ListView):
     model = Recipe
@@ -137,9 +134,9 @@ def fork_recipe(request,pk):
         #print(original_steps.count())
         StepFormSet2 = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=original_steps.count())
         step_formset = StepFormSet2(initial=[{'name': x.name} for x in original_steps])
-        print(formset)
-        print("----------------------")
-        print(step_formset)
+        # print(formset)
+        # print("----------------------")
+        # print(step_formset)
 
         return render(request, 'recipes/fork_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset, "original_recipe":original_recipe,})
     elif request.method == "POST":
@@ -149,8 +146,11 @@ def fork_recipe(request,pk):
             recipe = form.save()
             recipe.forkedid = pk
             recipe.isforked = 1
-            recipe.upload = original_recipe.upload
+            #print(recipe.upload)
+            if recipe.upload == "static 'stock.jpg'":
+                recipe.upload = original_recipe.upload
             recipe.save()
+            #print(recipe.upload)
             formset = IngredientFormSet(request.POST, instance=recipe)
             step_formset = StepFormSet(request.POST, instance=recipe)
             if formset.is_valid():
