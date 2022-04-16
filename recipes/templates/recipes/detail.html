@@ -105,11 +105,11 @@
                 <h2 style="font-size: 25px">Forked Recipes</h2>
               </div>
 
-              <!-- <div class="list-group">
-                {% for rec in recipe.get_forked %}
-                    <li>{{rec.name}}</li>
+              <div class="list-group">
+                {% for rec in recipe.forked_recipes %}
+                    <li>{{rec.title|capfirst}}</li>
                 {% endfor %}
-              </div> -->
+              </div>
 
 
               

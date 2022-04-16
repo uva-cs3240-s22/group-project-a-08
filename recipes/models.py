@@ -14,7 +14,7 @@ class Recipe(models.Model):
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
     upload = models.ImageField(upload_to='media/', blank=True, default="static 'stock.jpg'")
-    forkedid = models.IntegerField(default=0)
+    forkedid = models.IntegerField(default=0) # the parent recipe's pk
     isforked = models.IntegerField(default=0) # 0 if recipe is original, 1 if forked
 
 
@@ -56,6 +56,9 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+    def forked_recipes(self):
+        return Recipe.objects.get_queryset().filter(isforked = 1, forkedid = self.id)
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
