@@ -7,14 +7,16 @@ from django.core.validators import MinValueValidator
 INTEGER_CHOICES= [tuple([x,x]) for x in range(1,11)]
 
 # Create your models here.
+
 class Recipe(models.Model):
     title = models.CharField(max_length=150)
     prep_time = models.IntegerField()
     cook_time = models.IntegerField()
     servings = models.IntegerField(choices=INTEGER_CHOICES)
     upload = models.ImageField(upload_to='media/', blank=True, default="static 'stock.jpg'")
-    forked_id = models.IntegerField(default=0)
-    is_forked = models.IntegerField(default=0) # 0 if recipe is original, 1 if forked
+    forkedid = models.IntegerField(default=0)
+    isforked = models.IntegerField(default=0) # 0 if recipe is original, 1 if forked
+
 
     # meal type
     BREAKFAST = 'BR'
