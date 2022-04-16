@@ -135,6 +135,9 @@
               <div class="row">
                 <div class="col-3">
                   <h2 style="font-size: 25px">Forked Recipes</h2>
+                   {% if recipe.forked_recipes|length == 0 %}
+                    <p>This recipe has not been forked yet.</p>
+                    {% else %}
                   <div id="carouselForked" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                       {% for rec in recipe.forked_recipes %}
@@ -177,6 +180,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
 
 
               

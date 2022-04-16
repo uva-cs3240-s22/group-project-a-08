@@ -50,7 +50,7 @@ def create_recipe(request):
                 formset.save()
             if step_formset.is_valid():
                 step_formset.save()
-            return redirect('/recipes/')
+            return HttpResponseRedirect(reverse('recipes:detail', args=(recipe.id,)))
         else:
             return render(request, 'recipes/create_recipe.html', {"form":form})
 
@@ -157,7 +157,7 @@ def fork_recipe(request,pk):
                 formset.save()
             if step_formset.is_valid():
                 step_formset.save()
-            return redirect('/recipes/')
+            return HttpResponseRedirect(reverse('recipes:detail', args=(recipe.id,)))
         else:
             return render(request, 'recipes/fork_recipe.html', {"form":form})
 
