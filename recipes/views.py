@@ -146,11 +146,11 @@ def fork_recipe(request,pk):
             recipe = form.save()
             recipe.forkedid = pk
             recipe.isforked = 1
-            #print(recipe.upload)
+            print(recipe.upload)
             if recipe.upload == "static 'stock.jpg'":
                 recipe.upload = original_recipe.upload
             recipe.save()
-            #print(recipe.upload)
+            print(recipe.upload)
             formset = IngredientFormSet(request.POST, instance=recipe)
             step_formset = StepFormSet(request.POST, instance=recipe)
             if formset.is_valid():
