@@ -21,6 +21,7 @@
         {% bootstrap_messages %}
     
         {% load static %}
+        <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
         <title>Upload Recipe</title>
     </head>
@@ -55,7 +56,10 @@
                     <a class="nav-link" href="#">Profile</a>
                   </li>
                 </ul>
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                  </a>
               </div>
             </div>
           </nav>
