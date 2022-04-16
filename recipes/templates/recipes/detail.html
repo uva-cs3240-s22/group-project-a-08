@@ -13,6 +13,7 @@
         {% bootstrap_messages %}
     
         {% load static %}
+        <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'recipes/styles.css' %}">
         <title>Recipe</title>
@@ -54,6 +55,15 @@
         </nav>
 
         <div class="py-3 px-5">
+          {% if recipe.isforked == 1 %}
+          <div class="row">
+            <a href="{% url 'recipes:detail' recipe.forkedid %}">
+              <i class="fa-solid fa-arrow-left-long"></i>
+              Back to parent recipe
+            </a>
+          </div>
+          {% endif %}
+
             <h1>{{recipe.title|capfirst}}</h1>
             <div class="row">
               <p class="col-10">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
