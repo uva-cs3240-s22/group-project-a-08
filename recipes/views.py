@@ -130,7 +130,7 @@ def fork_recipe(request,pk):
         form = RecipeForm(instance=original_recipe)
         #print(original_steps)
         IngredientFormSet2 = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=original_ingreds.count())
-        formset = IngredientFormSet2(initial=[{'name': x.name, 'quantity': x.quantity} for x in original_ingreds])
+        formset = IngredientFormSet2(initial=[{'name': x.name, 'quantity': x.quantity, 'units': x.units} for x in original_ingreds])
         #print(original_steps.count())
         StepFormSet2 = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=original_steps.count())
         step_formset = StepFormSet2(initial=[{'name': x.name} for x in original_steps])
