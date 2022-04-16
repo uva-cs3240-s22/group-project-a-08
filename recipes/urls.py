@@ -13,4 +13,6 @@ urlpatterns = [
     path('search/', views.search_recipes, name='search'),
     path('filter/', views.filter_recipes, name='filter'),
     path('saved/', views.SavedListView.as_view(), name='saved_recipes'),
+    path('fork/<int:pk>', views.fork_recipe, name='fork'),
+    #path('fork/', views.fork_recipe, name='forkdefault'),
 ]

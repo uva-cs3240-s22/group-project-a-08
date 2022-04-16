@@ -7,6 +7,7 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = '__all__'
+        exclude = ('isforked','forkedid')
 
 
 class IngredientForm(forms.ModelForm):
@@ -19,5 +20,5 @@ class StepForm(forms.ModelForm):
         model = Step
         exclude = ('recipe',)
 
-IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=0)
-StepFormSet = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=0)
+IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=0, can_delete=False)
+StepFormSet = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=0, can_delete=False)

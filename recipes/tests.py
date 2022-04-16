@@ -179,36 +179,52 @@ class SavedRecipeTests(TestCase):
         page_response = self.client.get(url)
         self.assertContains(page_response, "No recipes saved yet")
 
-# # use assertEqual or assertNotEqual to see if the picture you chose matches or doesn't match the picture in the recipe
-# class RecipeImageTests(TestCase):
-#     def setUp(self):
-#         Recipe.objects.create(title="Cookies",  prep_time=5,    cook_time=10, servings=2, upload="cookie.png")
-#         Recipe.objects.create(title="Pancakes", prep_time=10,   cook_time=20, servings=4, upload="")
-
-#     def test_save_image(self):
-#         recipe  = Recipe.objects.get(title="Cookies")
-#         self.assertEqual(recipe.upload.url, "%s.s3.amazonaws.com/media/media/cookie.png" % os.environ["AWS_STORAGE_BUCKET_NAME"])
-
-#     def test_no_save_image(self):
-#         recipe  = Recipe.objects.get(title="Cookies")
-#         self.assertEqual(recipe.upload.url, "%s.s3.amazonaws.com/media/static%20'stock.jpg'" % os.environ["AWS_STORAGE_BUCKET_NAME"])
-
-"""
-class RecipeIngredientModelTests(TestCase):
-
+# use assertEqual or assertNotEqual to see if the picture you chose matches or doesn't match the picture in the recipe
+class RecipeImageTests(TestCase):
     def setUp(self):
-        Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
-        test_recipe = Recipe.objects.get(title="Cookies")
-        Ingredient.objects.create(name='cookie dough', quantity=1.0, recipe = test_recipe)
-        Ingredient.objects.create(name='chocolate', quantity=4.5, recipe = test_recipe)
+        Recipe.objects.create(title="Cookies",  prep_time=5,    cook_time=10, servings=2, upload="cookie.png")
+        Recipe.objects.create(title="Pancakes", prep_time=10,   cook_time=20, servings=4)
 
-    def tearDown(self):
-        # Clean up run after every test method.
-        pass
+    def test_save_image(self):
+        cookies  = Recipe.objects.get(title="Cookies")
+        self.assertEqual(cookies.upload, "cookie.png")
 
+    def test_no_save_image(self):
+        recipe  = Recipe.objects.get(title="Pancakes")
+        self.assertEqual(recipe.upload, "static 'stock.jpg'")
+
+class ForkedRecipeTests(TestCase):
+
+    def test_is_recipe_forked(self):
+        cookies = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        cookies2 = Recipe.objects.create(title="Cookies Forked", prep_time=10, cook_time=30, servings=4, isforked = 1, forkedid = cookies.id)
+        self.assertEqual(cookies2.isforked == 1, True)
+        self.assertEqual(cookies2.forkedid == cookies.id, True)
     
-    def test_str_method_recipe(self):
-        recipe = Recipe.objects.get(title="Cookies")
-        self.assertEqual(str(recipe), recipe.title)
+    def test_recipe_appear_on_detail_page(self):
+        cookies = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        cookies2 = Recipe.objects.create(title="Cookies Forked", prep_time=10, cook_time=30, servings=4, isforked = 1, forkedid = cookies.id)
+        url = reverse('recipes:detail', args=(cookies.id,))
+        page_response = self.client.get(url)
+        self.assertContains(page_response, cookies2.title)
 
-"""
+    def test_recipe_not_appear_on_detail_page(self):
+        cookies = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        cookies2 = Recipe.objects.create(title="Cookies Forked", prep_time=10, cook_time=30, servings=4, isforked = 0, forkedid = 0)
+        url = reverse('recipes:detail', args=(cookies.id,))
+        page_response = self.client.get(url)
+        self.assertNotContains(page_response, cookies2.title)
+    
+    def test_forked_recipe_back_button(self):
+        cookies = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        cookies2 = Recipe.objects.create(title="Cookies Forked", prep_time=10, cook_time=30, servings=4, isforked = 1, forkedid = cookies.id)
+        url = reverse('recipes:detail', args=(cookies2.id,))
+        page_response = self.client.get(url)
+        self.assertContains(page_response, "Back to parent recipe")
+
+    def test_parent_recipe_back_button(self):
+        cookies = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2)
+        cookies2 = Recipe.objects.create(title="Cookies Forked", prep_time=10, cook_time=30, servings=4, isforked = 1, forkedid = cookies.id)
+        url = reverse('recipes:detail', args=(cookies.id,))
+        page_response = self.client.get(url)
+        self.assertContains(page_response, "Back to recipes index")

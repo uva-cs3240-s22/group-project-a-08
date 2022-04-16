@@ -13,6 +13,7 @@
         {% bootstrap_messages %}
     
         {% load static %}
+        <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'recipes/styles.css' %}">
         <title>Recipe</title>
@@ -48,19 +49,45 @@
                     <a class="nav-link" href="#">Profile</a>
                   </li>
                 </ul>
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
               </div>
             </div>
         </nav>
 
         <div class="py-3 px-5">
+          {% if recipe.isforked == 1 %}
+          <div class="row">
+            <a href="{% url 'recipes:detail' recipe.forkedid %}" style="text-decoration: none;">
+              <i class="fa-solid fa-angles-left"></i>
+              Back to parent recipe
+            </a>
+          </div>
+          {% else %}
+          <div class="row">
+            <a href="{% url 'recipes:all_recipes' %}" style="text-decoration: none;">
+              <i class="fa-solid fa-angles-left"></i>
+              Back to recipes index
+            </a>
+          </div>
+          {% endif %}
+
             <h1>{{recipe.title|capfirst}}</h1>
             <div class="row">
-              <p class="col-11">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
+              <p class="col-10">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
+              <div class="col-1">
+                <a class="btn btn-danger col-12" href="{% url 'recipes:fork' recipe.id%}" role="button">Fork</a>
+              </div>
               {% if recipe in user.userprofile.saved.all %}
-                <a class="btn btn-danger col-1" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Favorite</a>
+              <div class="col-1">
+                <a class="btn btn-danger col-12" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Unfavorite</a>
+              </div>
               {% else %}
-                <a class="btn btn-danger col-1" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Unfavorite</a>
+              <div class="col-1">
+                <a class="btn btn-danger col-12" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Favorite</a>
+              </div>
               {% endif %}
             </div>
             <hr/>
@@ -69,24 +96,120 @@
                 <div class="col-2">
                     <h2 style="font-size: 25px">Ingredients</h2>
                     <div>
-                        <ul>
+                        <ul class="list-group">
                             {% for ingredient in recipe.ingredients.all %}
-                                <li>{{ingredient.name}} {{ingredient.quantity}}</li>
+                                <li class="list-group-item">{{ingredient.name}} {{ingredient.quantity}}</li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-10">
+                <div class="col-2">
                     <h2 style="font-size: 25px">Directions</h2>
                     <div>
-                      <ol>
+                      <ol class="list-group list-group-numbered">
                           {% for step in recipe.steps.all %}
-                              <li>{{step.name}}</li>
+                              <li class="list-group-item">{{step.name}}</li>
                           {% endfor %}
                       </ol>
                   </div>
                 </div>
+
+                <div class="col-2">
+
+                </div>
+
+                <div class="col-5">
+                  <img src="{{ recipe.upload.url }}" class="img-thumbnail" alt="..." />
+                </div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-2">
+                <h2 style="font-size: 25px">Forked Recipes</h2>
+                  <div class="list-group">
+                    {% for rec in recipe.forked_recipes %}
+                      <a href="{% url 'recipes:detail' rec.id %}" class="list-group-item list-group-item-action">{{rec.title|capfirst}}</a>
+                    {% endfor %}
+                  </div>
+              </div> -->
+
+              <style>
+                #carouselForked .carousel-item img {
+                  object-fit: cover;
+                  object-position: center;
+                  height: 50vh;
+                  overflow: hidden;
+                }
+                #carouselForked .carousel-item:before {
+                  content: "";
+                  background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+                  display: block;
+                  position: absolute;
+                  top: 0;
+                  width: 100vw;
+                  height: 100vh;
+                }
+                a:link {
+                  text-decoration: none;
+                }
+                a:hover {
+                  text-decoration: underline;
+                }
+              </style>
+
+              <div class="row">
+                <div class="col-3">
+                  <h2 style="font-size: 25px">Forked Recipes</h2>
+                   {% if recipe.forked_recipes|length == 0 %}
+                    <p>This recipe has not been forked yet.</p>
+                    {% else %}
+                  <div id="carouselForked" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                      {% for rec in recipe.forked_recipes %}
+                        {% if forloop.first%}
+                          <button type="button" data-bs-target="#carouselForked" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        {% else %}
+                          <button type="button" data-bs-target="#carouselForked" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide 2"></button>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                      {% for rec in recipe.forked_recipes %}
+                        {% if forloop.counter == 1 %}
+                          <div class="carousel-item active">
+                            <img src="{{ rec.upload.url }}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                              <a href="{% url 'recipes:detail' rec.id%}" class="stretched-link link-light"><h5>{{rec.title|capfirst}}</h5></a>
+                              <p>Prep Time: {{rec.prep_time}} min |  Cook Time: {{rec.cook_time}} min |  Servings: {{rec.servings}}</p>
+                            </div>
+                          </div>
+                        {% else %}
+                          <div class="carousel-item">
+                            <img src="{{ rec.upload.url }}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                              <a href="{% url 'recipes:detail' rec.id%}" class="stretched-link link-light"><h5>{{rec.title|capfirst}}</h5></a>
+                              <p>Prep Time: {{rec.prep_time}} min |  Cook Time: {{rec.cook_time}} min |  Servings: {{rec.servings}}</p>
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselForked" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselForked" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+
+              
             </div>
             
         </div>

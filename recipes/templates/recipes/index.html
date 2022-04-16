@@ -13,6 +13,7 @@
   {% bootstrap_messages %}
 
   {% load static %}
+  <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
   <title>All Recipes</title>
 </head>
@@ -46,7 +47,10 @@
             <a class="nav-link" href="#">Profile</a>
           </li>
         </ul>
-        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        <a class="nav-link" href="{% url 'logout' %}">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </a>
       </div>
     </div>
   </nav>
@@ -165,7 +169,7 @@
                       <div class="card">  
                         <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                         <div class="card-body">
-                          <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
+                          <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
                           <p class="card-text">
                             PrepTime: {{ recipe.prep_time }} mins<br>
                             CookTime: {{ recipe.cook_time }} mins<br>
