@@ -69,7 +69,7 @@
                 <h1>Add A Recipe</h1>
                 <form action="{% url 'recipes:fork' original_recipe.id%}" method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {% bootstrap_form form %}
                     <br>
 
                     <!-- INGREDIENT FORM -->
