@@ -1,0 +1,79 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{# Load Bootstrap library #}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+
+            <h1>{% trans "Sign In Via" %}</h1>
+            <div class="accordion" id="login-accordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Third Party Account
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#login-accordion">
+                        <div class="accordion-body">
+                            {% get_providers as socialaccount_providers %}
+                            {% if socialaccount_providers %}
+                            <div class="socialaccount_ballot">
+                                <ul class="socialaccount_providers" style="list-style-type: none;">
+                                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Primary Account
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#login-accordion">
+                        <div class="accordion-body">
+                            <form class="login" method="POST" action="{% url 'account_login' %}">
+                                {% csrf_token %}
+                                <div class="list-group">
+                                    <div class="list-group-item list-group-item-action">
+                                        {% bootstrap_form form %}
+                
+                                        {% if redirect_field_value %}
+                                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                        {% endif %}
+                                    </div>
+                                    <div class="list-group-item list-group-item-action">
+                                        <button class="btn btn-primary primaryAction" type="submit">{% trans "Sign In" %}</button>
+                                    </div>
+                                    <div class="list-group-item list-group-item-action">
+                                        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>                
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

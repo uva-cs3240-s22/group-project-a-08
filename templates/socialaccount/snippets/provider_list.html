@@ -1,0 +1,36 @@
+{% load socialaccount %}
+
+{# Load Bootstrap library #}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+
+{% get_providers as socialaccount_providers %}
+{% for provider in socialaccount_providers %}
+
+{% if provider.id == "openid" %}
+{% for brand in provider.get_brands %}
+<li style="display: inline-block;">
+    <a title="{{brand.name}}" class="socialaccount_provider {{provider.id}} {{brand.id}}"
+        href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">{{brand.name}}</a>
+</li>
+{% endfor %}
+{% endif %}
+
+<li>
+    <button class="btn btn-dark bg-dark btn-google">
+        <div>
+            {% if provider.id == 'google' %}
+            <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;" />
+            {% endif %}
+
+            <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                {{provider.name}}
+            </a>
+        </div>
+    </button>    
+</li>
+{% endfor %}

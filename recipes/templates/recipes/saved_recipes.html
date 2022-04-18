@@ -13,6 +13,7 @@
         {% bootstrap_messages %}
     
         {% load static %}
+        <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'recipes/style.css' %}">
         <title>All Recipes</title>
@@ -41,20 +42,23 @@
                     <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'recipes:saved_recipes' %}">Starred</a>
+                    <a class="nav-link active" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
                   </li>
                 </ul>
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
               </div>
             </div>
           </nav>
 
-          <div class="px-5 pt-3">
-              Hi {{user.username}}
+          <h1 class="mt-3 text-center">{{ user.username|capfirst}}'s Favorite Recipes</h1>
 
+          <div class="px-5 pt-3">
               {% if user.userprofile.saved.all %}
                 <div class="row">
                   {% for recipe in user.userprofile.saved.all %}
@@ -63,25 +67,33 @@
                             <div style="position: relative">
                                 <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                               <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
-                              <a class="unsaveBtn btn btn-outline-primary" style="position: absolute; top: 5%; Right: 5%" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
+                              <a class="unsaveBtn btn btn-danger" style="position: absolute; top: 5%; Right: 5%" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
                                   <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
                                 </svg>
                               </a>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a></h5>
+                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
                                 <p class="card-text">
-                                  PrepTime: {{ recipe.prep_time }} <br>
-                                  CookTime: {{ recipe.cook_time }} <br>
+                                  PrepTime: {{ recipe.prep_time }} mins<br>
+                                  CookTime: {{ recipe.cook_time }} mins<br>
                                   Servings: {{ recipe.servings }} <br>
-                                  Meal Type: {{ recipe.meal_type }} <br>
-                                  Diet Restriction: {{ recipe.diet_restriction }} <br>
+                                  
+                                  {% if recipe.diet_restriction == 'VG' %}
+                                  <span class="badge rounded-pill bg-success">VEGAN</span>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'VE' %}
+                                  <span class="badge rounded-pill bg-warning">VEGETARIAN</span>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'GF' %}
+                                  <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
+                                  {% endif %}
                                 </p>
                             </div>
                         </div>
                     </div>
-                    {% if forloop.counter|divisibleby:3 %}
+                    {% if forloop.counter|divisibleby:6 %}
                 </div>
                 <div class="row">
                     {% endif %}

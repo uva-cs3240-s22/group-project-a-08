@@ -12,14 +12,14 @@
 <head>
         {# Load the tag library #}
         {% load bootstrap5 %}
-        
+
         {# Load CSS and JavaScript #}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
-        
+
         {# Display django.contrib.messages as Bootstrap alerts #}
         {% bootstrap_messages %}
-    
+
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
@@ -67,13 +67,13 @@
             <div class="row">
                 <div class="col">
                 <h1>Add A Recipe</h1>
-                <form action="." method="post" enctype='multipart/form-data'>
+                <form action="{% url 'recipes:fork' original_recipe.id%}" method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <br>
-                    
+
                     <!-- INGREDIENT FORM -->
-                
+
                     <h1>Add Ingredients</h1>
                     {{ formset.management_form }}
                     <div id="ingredient-form">
@@ -83,37 +83,37 @@
                         </div>
                     {% endfor %}
                     </div>
-                
+
 
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
                     <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
-                
+
                     <br>
                     <br>
                     <!-- STEP FORM -->
-                    
+
                     <h1>Add Steps</h1>
                     {{ step_formset.management_form }}
                     <div id="step-form">
                     {% for form in step_formset %}
                         <div class="step-form-class">
-                            {{ step_form.as_p }}
+                            {{ form.as_p }}
                         </div>
                     {% endfor %}
                     </div>
 
                     <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
                     <button id="add-step" type="button" class="btn btn-success">Add Step</button>
-                
 
-                    
+
+
                     <p style="padding-top: 10px;"><button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button></p>
-                    
+
                 </form>
                 </div>
             </div>
         </div>
-            
+
 
                 <!--Source for javascript: https://www.youtube.com/watch?v=s3T-w2jhDHE-->
                 <!-- DYNAMIC ADD INGREDIENT -->
@@ -164,7 +164,7 @@
                             formCopyTarget.append(copyemptyform)
                         }
                     </script>
-        
+
     </body>
 
 </html>
