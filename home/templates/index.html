@@ -26,6 +26,25 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if not user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'recipes:create_recipe' %}">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Profile</a>
+          </li>
+        </ul>
+        {% else %}
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -42,10 +61,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
           </li>
-
         </ul>
-
-        {% if user.is_authenticated %}
         <a class="nav-link" href="{% url 'logout' %}">
           <i class="fa-solid fa-right-from-bracket"></i>
           Logout
