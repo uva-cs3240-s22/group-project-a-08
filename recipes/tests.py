@@ -12,8 +12,8 @@ from .forms import RecipeForm, IngredientForm
 
 # Create your tests here.
 class RecipeListTests(TestCase):
+    
     def test_no_recipes(self):
-    # If no questions exist
         response = self.client.get(reverse('recipes:all_recipes'))
         self.assertQuerysetEqual(response.context['recipe_list'], [])
     

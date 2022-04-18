@@ -13,25 +13,28 @@ from users.models import UserProfile
 from .forms import IngredientForm, IngredientFormSet, RecipeForm, StepForm, StepFormSet
 from .models import Recipe, Step
 
-
 class RecipeListView(generic.ListView):
     model = Recipe
     template_name = 'recipes/index.html'
     context_object_name = "recipe_list"
+    
 
 class RecipeDetailView(generic.DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
+    
 
 class SearchResultsView(generic.ListView):
     model = Recipe
     template_name = 'recipes/search_results.html'
     context_object_name = "results_list"
+    
 
 class SavedListView(generic.ListView):
     model = Recipe
     template_name = 'recipes/saved_recipes.html'
     context_object_name = "saved_list"
+
 
 @login_required(login_url='/')
 def create_recipe(request):
