@@ -4,7 +4,7 @@ from django.urls import reverse
 # Create your tests here.
 # source: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Testing
 
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, Step
 from users.models import UserProfile
 from .forms import RecipeForm, IngredientForm
 
@@ -143,6 +143,21 @@ class RecipeDetailViewTests(TestCase):
         url = reverse('recipes:detail', args=(recipe.id,))
         response = self.client.get(url)
         self.assertContains(response, recipe.title)
+
+    def test_recipe_with_ingred(self):
+        recipe = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2, meal_type='SN', diet_restriction='NR')
+        ingred = Ingredient.objects.create(name="dough", quantity="3 cups", recipe=recipe)
+        url = reverse('recipes:detail', args=(recipe.id,))
+        response = self.client.get(url)
+        self.assertContains(response, ingred.name)
+
+    def test_recipe_with_step(self):
+        recipe = Recipe.objects.create(title="Cookies", prep_time=5, cook_time=10, servings=2, meal_type='SN', diet_restriction='NR')
+        step = Step.objects.create(name="make cookies", recipe=recipe)
+        url = reverse('recipes:detail', args=(recipe.id,))
+        response = self.client.get(url)
+        self.assertContains(response, step.name)
+    
 
 class SavedRecipeTests(TestCase):
     def setUp(self):
