@@ -64,8 +64,9 @@ class Recipe(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100, verbose_name = 'Ingredient')
-    quantity = models.FloatField(validators=[MinValueValidator(0.0)])
-    units = models.CharField(max_length=100, default=" ")
+    # quantity = models.FloatField(validators=[MinValueValidator(0.0)])
+    quantity = models.CharField(max_length=100, default="", verbose_name = 'Quantity and Units')
+    # units = models.CharField(max_length=100, default=" ")
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
 
