@@ -1,82 +1,74 @@
 {% load socialaccount %}
 <html>
-
 <head>
-    {# Load the tag library #}
-    {% load bootstrap5 %}
-    
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
+  {# Load the tag library #}
+  {% load bootstrap5 %}
 
-    {% load static %}
-    <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
-    <title>Home</title>
+  {# Load CSS and JavaScript #}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+  {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %}
+
+  {% load static %}
+  <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+  <title>Home</title>
 </head>
 
 <body>
-    
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Word of Mouth</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:create_recipe' %}">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+
+        </ul>
+
         {% if user.is_authenticated %}
-
-        <!-- NAVBAR -->
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Word of Mouth</a>
-            <button   class="navbar-toggler"
-                      type="button"
-                      data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'recipes:create_recipe' %}">Upload</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Profile</a>
-                </li>
-  
-              </ul>
-              <a class="nav-link" href="{% url 'logout' %}">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Logout
-              </a>
-            </div>
-          </div>
-        </nav>
-
-        <h1 class="mt-3 text-center">Welcome, {{ user.username|capfirst}}!</h1>
-
-        {% else %}
-      <div class="container-fluid" style="margin-top: 30px;">
-        <button class="btn btn-dark bg-dark btn-google">
-          <div>
-            <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
-            <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
-              Login with Google
-            </a>
-          </div>
-        </button>
-
-        {% endif %}    
+        <a class="nav-link" href="{% url 'logout' %}">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </a>
+        {% endif %}
       </div>
+    </div>
+  </nav>
 
+  {% if user.is_authenticated %}
+  <h1 class="mt-3 text-center">Welcome, {{ user.username|capfirst}}!</h1>
 
-
+  {% else %}
+  <div class="container-fluid" style="margin-top: 30px;">
+    <button class="btn btn-dark bg-dark btn-google">
+      <div>
+        <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
+        <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
+          Login with Google
+        </a>
+      </div>
+    </button>
+  </div>
+  {% endif %}
 </body>
-
 </html>
