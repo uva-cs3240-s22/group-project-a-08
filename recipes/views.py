@@ -140,16 +140,10 @@ def fork_recipe(request,pk):
         original_ingreds = Ingredient.objects.get_queryset().filter(recipe = original_recipe)
         original_steps = Step.objects.get_queryset().filter(recipe = original_recipe)
         form = RecipeForm(instance=original_recipe)
-        #print(original_steps)
         IngredientFormSet2 = forms.inlineformset_factory(Recipe, Ingredient, form=IngredientForm, extra=original_ingreds.count(), can_delete=False)
         formset = IngredientFormSet2(initial=[{'name': x.name, 'quantity': x.quantity} for x in original_ingreds])
-        #print(original_steps.count())
         StepFormSet2 = forms.inlineformset_factory(Recipe, Step, form=StepForm, extra=original_steps.count(), can_delete=False)
         step_formset = StepFormSet2(initial=[{'name': x.name} for x in original_steps])
-        # print(formset)
-        # print("----------------------")
-        # print(step_formset)
-
         return render(request, 'recipes/fork_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset, "original_recipe":original_recipe,})
     elif request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
@@ -158,18 +152,14 @@ def fork_recipe(request,pk):
             recipe = form.save()
             recipe.forkedid = pk
             recipe.isforked = 1
-            #print(recipe.upload)
             if recipe.upload == "static 'stock.jpg'":
                 recipe.upload = original_recipe.upload
             recipe.save()
-            #print(recipe.upload)
             formset = IngredientFormSet(request.POST, instance=recipe)
             step_formset = StepFormSet(request.POST, instance=recipe)
             if formset.is_valid():
-                print("ingreds valid")
                 formset.save()
             if step_formset.is_valid():
-                print("steps valid")
                 step_formset.save()
             return HttpResponseRedirect(reverse('recipes:detail', args=(recipe.id,)))
         else:
