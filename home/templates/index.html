@@ -8,8 +8,8 @@
   {% bootstrap_css %}
   {% bootstrap_javascript %}
 
-  {# Display django.contrib.messages as Bootstrap alerts #}
-  {% bootstrap_messages %}
+  <!-- {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %} -->
 
   {% load static %}
   <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -75,11 +75,12 @@
   <h1 class="mt-3 text-center">Welcome, {{ user.username|capfirst}}!</h1>
 
   {% else %}
-  <div class="container-fluid" style="margin-top: 30px;">
-    <button class="btn btn-dark bg-dark btn-google">
+  <div class="container-fluid" style="text-align: center;">
+    <h1 style="padding-bottom:30px; padding-top: 10px;">Welcome to Word of Mouth!</h1>
+    <button class="btn btn-lg bg-dark btn-google" style="position: relative;">
       <div>
         <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
-        <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
+        <a href="{% provider_login_url 'google' %}" style="text-decoration: none;" class="stretched-link link-light">
           Login with Google
         </a>
       </div>
