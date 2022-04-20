@@ -77,9 +77,21 @@
           </div>
           {% endif %}
 
-            <h1>{{recipe.title|capfirst}}</h1>
+            <h1>
+              {{recipe.title|capfirst}}
+            </h1>
             <div class="row">
-              <p class="col-10">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
+              <p class="col-10">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}
+                {% if recipe.diet_restriction == 'VG' %}
+                | <span class="badge rounded-pill bg-success">VEGAN</span>
+                {% endif %}
+                {% if recipe.diet_restriction == 'VE' %}
+                | <span class="badge rounded-pill bg-warning">VEGETARIAN</span>
+                {% endif %}
+                {% if recipe.diet_restriction == 'GF' %}
+                | <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
+                {% endif %}
+              </p>
               <div class="col-1">
                 <a class="btn btn-danger col-12" href="{% url 'recipes:fork' recipe.id%}" role="button">Fork</a>
               </div>
