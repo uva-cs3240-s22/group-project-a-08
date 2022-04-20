@@ -10,7 +10,7 @@
         {% bootstrap_javascript %}
         
         <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
-        {% bootstrap_messages %}
+        <!-- {% bootstrap_messages %} -->
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -18,7 +18,7 @@
         <title>Results</title>
     </head>
 
-    <body style=" background-color:#ddd3f0;">
+    <body style="background-color:#ddd3f0;">
 
       <!-- NAVBAR -->
         <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
@@ -73,12 +73,12 @@
                 <div class="col-2">
                   <h5>Categories</h5>
                   <form action="{% url 'recipes:filter' %}" method="get">
-                  <div class="accordion accordion-flush" id="accordionFlushExample" style="background-color: green">
+                  <div class="accordion accordion-flush" id="accordionFlushExample" style="background-color:#ddd3f0;">
 
                     <!-- BREAKFAST, LUNCH, DINNER FILTER -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" style="background-color:#ddd3f0;">
                       <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:#ddd3f0;">
                           Meal Type
                         </button>
                       </h2>
@@ -121,9 +121,9 @@
                     </div>
 
                     <!-- DIETARY RESTRICTION FILTER -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" style="background-color:#ddd3f0;">
                       <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" style="background-color:#ddd3f0;">
                           Dietary Restriction
                         </button>
                       </h2>
@@ -159,16 +159,6 @@
                         </div>
                       </div>
                     </div>
-                    <!--div class="accordion-item">
-                      <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                          Category #3
-                        </button>
-                      </h2>
-                      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Placeholder content for this accordion</div>
-                      </div>
-                    </div-->
                   </div>
                   <button class="btn btn-outline-success" type="submit">Filter</button>
                 </form>
@@ -181,7 +171,7 @@
                 <div class="d-flex flex-row bd-highlight mb-3 w-100">
                     {% for recipe in results %}
                         <div class="d-flex justify-content-evenly col-3" style="padding-left: 10px; padding-right: 10px;">
-                          <div class="card">
+                          <div class="card" style="background-color:#e5dff1;">
                             <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                             <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
                             <div class="card-body">

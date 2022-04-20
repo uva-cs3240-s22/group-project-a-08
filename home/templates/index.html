@@ -81,22 +81,22 @@
     
     <div class="d-flex flex-row bd-highlight mb-3">
       <div class="p-2 bd-highlight justify-content-center">
-        <h3 class="text-center">
-          <i class="fa-solid fa-burger"></i>
+        <h3 class="text-center" >
+          <i class="fa-solid fa-burger" style="color: #5a24be;"></i>
           Upload
         </h3>
         <p>Upload your favorite recipes with the click of a button!</p>
       </div>
       <div class="p-2 bd-highlight justify-content-center">
         <h3 class="text-center">
-          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart" style="color: #b71543;"></i>
           Favorite
         </h3>
         <p>Enjoyed a recipe? Favorite it and have it saved forever!</p>
       </div>
       <div class="p-2 bd-highlight justify-content-center">
         <h3 class="text-center">
-          <i class="fa-solid fa-code-fork"></i>
+          <i class="fa-solid fa-code-fork" style="color: #575063;"></i>
           Fork
         </h3>
         <p>Want to make a slight adjustment to an existing recipe? Fork it!</p>
@@ -111,7 +111,7 @@
   {% else %}
   <div class="container-fluid" style="text-align: center;">
     <h1 style="padding-bottom:30px; padding-top: 10px;">Welcome to Word of Mouth!</h1>
-    <button class="btn btn-lg bg-dark btn-google" style="position: relative;">
+    <button class="btn btn-lg btn-google" style="position: relative; background-color: #381e67; border-color: #381e67;">
       <div>
         <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
         <a href="{% provider_login_url 'google' %}" style="text-decoration: none;" class="stretched-link link-light">

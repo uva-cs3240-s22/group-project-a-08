@@ -10,7 +10,7 @@
         {% bootstrap_javascript %}
         
         <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
-        {% bootstrap_messages %}
+        <!-- {% bootstrap_messages %} -->
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -98,7 +98,7 @@
                     <div>
                         <ul class="list-group">
                             {% for ingredient in recipe.ingredients.all %}
-                                <li class="list-group-item"><b>{{ingredient.name}}:</b> {{ingredient.quantity}}</li>
+                                <li class="list-group-item" style="background-color:#e5dff1;"><b>{{ingredient.name}}:</b> {{ingredient.quantity}}</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -109,7 +109,7 @@
                     <div>
                       <ol class="list-group list-group-numbered">
                           {% for step in recipe.steps.all %}
-                              <li class="list-group-item">{{step.name}}</li>
+                              <li class="list-group-item" style="background-color:#e5dff1;">{{step.name}}</li>
                           {% endfor %}
                       </ol>
                   </div>

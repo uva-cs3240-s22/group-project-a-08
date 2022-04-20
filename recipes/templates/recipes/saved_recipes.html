@@ -10,7 +10,7 @@
         {% bootstrap_javascript %}
         
         <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
-        {% bootstrap_messages %}
+        <!-- {% bootstrap_messages %} -->
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -63,7 +63,7 @@
                 <div class="row">
                   {% for recipe in user.userprofile.saved.all %}
                     <div class="col-2">
-                        <div class="card">  
+                        <div class="card" style="background-color:#e5dff1;">  
                             <div style="position: relative">
                                 <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                               <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
