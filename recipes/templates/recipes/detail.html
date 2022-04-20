@@ -63,16 +63,16 @@
         <div class="py-3 px-5">
           {% if recipe.isforked == 1 %}
           <div class="row">
-            <a href="{% url 'recipes:detail' recipe.forkedid %}" style="text-decoration: none;">
-              <i class="fa-solid fa-angles-left"></i>
-              Back to parent recipe
+            <a href="{% url 'recipes:detail' recipe.forkedid %}" style="text-decoration: none; color: #381e67;">
+              <i class="fa-solid fa-circle-arrow-left"></i>
+              <b>Back to parent recipe</b>
             </a>
           </div>
           {% else %}
           <div class="row">
-            <a href="{% url 'recipes:all_recipes' %}" style="text-decoration: none;">
-              <i class="fa-solid fa-angles-left"></i>
-              Back to recipes index
+            <a href="{% url 'recipes:all_recipes' %}" style="text-decoration: none; color: #381e67;">
+              <i class="fa-solid fa-circle-arrow-left"></i>
+              <b>Back to recipes index</b>
             </a>
           </div>
           {% endif %}
