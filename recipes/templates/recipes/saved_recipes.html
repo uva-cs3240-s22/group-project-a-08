@@ -59,6 +59,7 @@
           <h1 class="mt-3 text-center">{{ user.username|capfirst}}'s Favorite Recipes</h1>
 
           <div class="px-5 pt-3">
+            <hr>
               {% if user.userprofile.saved.all %}
                 <div class="row">
                   {% for recipe in user.userprofile.saved.all %}
@@ -73,8 +74,8 @@
                                 </svg>
                               </a>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
+                            <div class="card-body" style="position: relative;">
+                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
                                 <p class="card-text">
                                   PrepTime: {{ recipe.prep_time }} mins<br>
                                   CookTime: {{ recipe.cook_time }} mins<br>
