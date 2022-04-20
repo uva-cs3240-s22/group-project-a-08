@@ -67,6 +67,7 @@
             <div class="row">
                 <div class="col">
                 <h1>Add A Recipe</h1>
+                <hr>
                 <form action="." method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
                     {% bootstrap_form form %}
@@ -75,6 +76,7 @@
                     <!-- INGREDIENT FORM -->
                 
                     <h1>Add Ingredients</h1>
+                    <hr>
                     {{ formset.management_form }}
                     <div id="ingredient-form">
                     {% for form in formset %}
@@ -86,13 +88,14 @@
                 
 
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
-                    <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
+                    <button id="add-ingredient" type="button" class="btn btn-secondary">Add Ingredient</button>
                 
                     <br>
                     <br>
                     <!-- STEP FORM -->
                     
                     <h1>Add Steps</h1>
+                    <hr>
                     {{ step_formset.management_form }}
                     <div id="step-form">
                     {% for form in step_formset %}
@@ -103,11 +106,10 @@
                     </div>
 
                     <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
-                    <button id="add-step" type="button" class="btn btn-success">Add Step</button>
+                    <button id="add-step" type="button" class="btn btn-secondary">Add Step</button>
                 
 
-                    
-                    <p style="padding-top: 10px;"><button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button></p>
+                    <p style="padding-top: 10px;"><button type="submit" class="btn btn-secondary btn-lg">Submit Recipe</button></p>
                     
                 </form>
                 </div>
