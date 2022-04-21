@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> Login </title>
+  {% block extra_head %}
+  {% endblock %}
+
+  {# Load Bootstrap library #}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+  <script defer src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
+</head>
+
+<body style="background-color:#ddd3f0;">
+  {% block body %}
+
+  {% if messages %}
+  {% bootstrap_messages %}
+  {% endif %}
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <i class="fa-solid fa-utensils" style="padding-right: 5px;"></i>
+        Word of Mouth
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'recipes:create_recipe' %}">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+        </ul>
+        <a class="nav-link link-light" href="{% url 'logout' %}">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+        <div class="list-group">
+          {% if user.is_authenticated %}
+          <a href="{% url 'account_email' %}" class="list-group-item list-group-item-action">Change E-mail</a>
+          <a href="{% url 'account_logout' %}" class="list-group-item list-group-item-action">Sign Out </a>
+          {% else %}
+          <!-- <a href="{% url 'account_login' %}" class="list-group-item list-group-item-action">Sign In </a>
+          <a href="{% url 'account_signup' %}" class="list-group-item list-group-item-action">Sign Up </a> -->
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% block content %}
+  {% endblock %}
+  {% endblock %}
+  {% block extra_body %}
+  {% endblock %}
+</body>
+
+</html>

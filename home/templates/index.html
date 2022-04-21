@@ -1,78 +1,128 @@
 {% load socialaccount %}
 <html>
-
 <head>
-    {# Load the tag library #}
-    {% load bootstrap5 %}
-    
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
+  {# Load the tag library #}
+  {% load bootstrap5 %}
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
-    <title>Home</title>
+  {# Load CSS and JavaScript #}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+  <!-- {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %} -->
+
+  {% load static %}
+  <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'Google.css' %}" />
+  <title>Home</title>
 </head>
 
-<body>
-    
-        {% if user.is_authenticated %}
-
-        <!-- NAVBAR -->
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Word of Mouth</a>
-            <button   class="navbar-toggler"
-                      type="button"
-                      data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'recipes:create_recipe' %}">Upload</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Starred</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Profile</a>
-                </li>
-  
-              </ul>
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-            </div>
-          </div>
-        </nav>
-
-        <p>Welcome, {{ user.username }} !</p>
-
+<body style="background-color:#ddd3f0;">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <i class="fa-solid fa-utensils" style="padding-right: 5px;"></i>
+        Word of Mouth
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if not user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'recipes:create_recipe' %}">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Profile</a>
+          </li>
+        </ul>
         {% else %}
-      <div class="container-fluid" style="margin-top: 30px;">
-        <button class="btn btn-dark bg-dark btn-google">
-          <div>
-            <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
-            <a href="{% provider_login_url 'google' %}" style="text-decoration: none;">
-              Login with Google
-            </a>
-          </div>
-        </button>
-
-        {% endif %}    
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:create_recipe' %}">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:all_recipes' %}">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+        </ul>
+        <a class="nav-link link-light" href="{% url 'logout' %}">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </a>
+        {% endif %}
       </div>
+    </div>
+  </nav>
+
+  {% if user.is_authenticated %}
+  <h1 class="mt-3 text-center">Welcome, {{ user.username|capfirst}}!</h1>
+  <!-- <h5 class="mt-3 text-center">Word of Mouth is a place to post recipes (but without the pages and pages of backstory)</h5> -->
+  <hr>
+  <!-- INTRO CONTENT -->
+  
+  <div class="d-flex justify-content-evenly" style="padding-top:50px;">
+    
+    <div class="d-flex flex-row bd-highlight mb-3">
+      <div class="p-2 bd-highlight justify-content-center">
+        <h3 class="text-center" >
+          <i class="fa-solid fa-burger" style="color: #5a24be;"></i>
+          Upload
+        </h3>
+        <p>Upload your favorite recipes with the click of a button!</p>
+      </div>
+      <div class="p-2 bd-highlight justify-content-center">
+        <h3 class="text-center">
+          <i class="fa-solid fa-heart" style="color: #b71543;"></i>
+          Favorite
+        </h3>
+        <p>Enjoyed a recipe? Favorite it and have it saved forever!</p>
+      </div>
+      <div class="p-2 bd-highlight justify-content-center">
+        <h3 class="text-center">
+          <i class="fa-solid fa-code-fork" style="color: #575063;"></i>
+          Fork
+        </h3>
+        <p>Want to make a slight adjustment to an existing recipe? Fork it!</p>
+      </div>
+    </div>
+
+    
+  </div>
 
 
 
+  {% else %}
+  <div class="container-fluid" style="text-align: center;">
+    <h1 style="padding-bottom:30px; padding-top: 10px;">Welcome to Word of Mouth!</h1>
+    <button class="btn btn-lg btn-google" style="position: relative; background-color: #381e67; border-color: #381e67;">
+      <div>
+        <img src="{% static 'Google.svg' %}" style="display:inline-block; width:50px; height:50px;">
+        <a href="{% provider_login_url 'google' %}" style="text-decoration: none;" class="stretched-link link-light">
+          Login with Google
+        </a>
+      </div>
+    </button>
+  </div>
+  {% endif %}
 </body>
-
 </html>
