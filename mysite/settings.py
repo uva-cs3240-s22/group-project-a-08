@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 
-SITE_ID = 2
+SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "home",
     "recipes",
     "users",
+    "review",
 ]
 
 # Use FOR OAuth

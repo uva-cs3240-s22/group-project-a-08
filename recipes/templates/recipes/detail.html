@@ -222,11 +222,23 @@
                 </div>
               </div>
               {% endif %}
-
-
               
             </div>
-            
+
+            <hr>
+
+            <div>
+              <h3>Reviews</h3>
+              <a class="btn btn-primary mb-2" style="width: 150px" href="{% url 'review:write_review' recipe.id%}" role="button">Write a Review</a>
+
+              {% for review in recipe.reviews.all %}
+                <div class="card mb-2 p-2">
+                  <p style="font-size: 20px" class="m-0 p-0">{{review.title}}</p>
+                  <p class="reviewRating">{{review.rating}}/5.0</p>
+                  <p class="reviewContent">{{review.content}}</p>
+                </div>
+              {% endfor %}
+            </div>
         </div>
 
 
