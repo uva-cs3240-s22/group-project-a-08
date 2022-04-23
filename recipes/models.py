@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User
 # Source: 
 # https://engineertodeveloper.com/getting-started-with-django-forms-create-a-recipe-app/
 # https://engineertodeveloper.com/getting-started-with-formsets-create-a-recipe-app/
@@ -16,6 +17,7 @@ class Recipe(models.Model):
     upload = models.ImageField(upload_to='media/', blank=True, default="static 'stock.jpg'", verbose_name = 'Picture')
     forkedid = models.IntegerField(default=0) # the parent recipe's pk
     isforked = models.IntegerField(default=0) # 0 if recipe is original, 1 if forked
+    #author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
 
     # meal type
