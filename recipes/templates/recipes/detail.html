@@ -245,6 +245,10 @@
                 </a>
               </div>
 
+              {% if recipe.reviews.all|length == 0 %}
+                <p>Be the first to add a review!</p>
+              {% endif %}
+
               {% for review in recipe.reviews.all %}
                 <div class="card mb-2 p-2" style="background-color:#e5dff1;">
                   <p style="font-size: 20px" class="m-0 p-0"><b>{{review.title}}</b>
