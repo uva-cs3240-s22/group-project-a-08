@@ -93,15 +93,24 @@
                 {% endif %}
               </p>
               <div class="col-1">
-                <a class="btn btn-danger col-12" href="{% url 'recipes:fork' recipe.id%}" role="button">Fork</a>
+                <a class="btn btn-danger col-12" href="{% url 'recipes:fork' recipe.id%}" role="button">
+                  <i class="fa-solid fa-code-fork"></i>
+                  Fork
+                </a>
               </div>
               {% if recipe in user.userprofile.saved.all %}
               <div class="col-1">
-                <a class="btn btn-danger col-12" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Unfavorite</a>
+                <a class="btn btn-danger col-12" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
+                  
+                  Unfavorite
+                </a>
               </div>
               {% else %}
               <div class="col-1">
-                <a class="btn btn-danger col-12" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Favorite</a>
+                <a class="btn btn-danger col-12" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">
+                  
+                  Favorite
+                </a>
               </div>
               {% endif %}
             </div>
@@ -223,23 +232,65 @@
               </div>
               {% endif %}
               
-            </div>
+            
 
-            <hr>
+            
 
             <div>
-              <h3>Reviews</h3>
-              <a class="btn btn-primary mb-2" style="width: 150px" href="{% url 'review:write_review' recipe.id%}" role="button">Write a Review</a>
+              <hr>
+              <div class="row">
+                <h3 class="col-10">Reviews</h3>
+                <a class="btn btn-secondary mb-2 col-12" style="width: 150px" href="{% url 'review:write_review' recipe.id%}" role="button">
+                  <i class="fa-solid fa-message"></i>
+                  Add a Review
+                </a>
+              </div>
 
               {% for review in recipe.reviews.all %}
-                <div class="card mb-2 p-2">
-                  <p style="font-size: 20px" class="m-0 p-0">{{review.title}}</p>
-                  <p class="reviewRating">{{review.rating}}/5.0</p>
+                <div class="card mb-2 p-2" style="background-color:#e5dff1;">
+                  <p style="font-size: 20px" class="m-0 p-0"><b>{{review.title}}</b></p>
+                  <p class="reviewRating">
+                    Rating: 
+                    {% if review.rating == 1 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 2 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 3 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 4 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 5 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    {% endif %}
+                  </p>
                   <p class="reviewContent">{{review.content}}</p>
                 </div>
               {% endfor %}
             </div>
+
+
         </div>
+      
 
 
     </body>
