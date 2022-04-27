@@ -14,15 +14,18 @@
   <script defer src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-color:#ddd3f0;">
   {% block body %}
 
   {% if messages %}
   {% bootstrap_messages %}
   {% endif %}
-  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Word of Mouth</a>
+      <a class="navbar-brand" href="#">
+        <i class="fa-solid fa-utensils" style="padding-right: 5px;"></i>
+        Word of Mouth
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -41,30 +44,29 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
         </ul>
-        <a class="nav-link" href="{% url 'logout' %}">
+        {% if user.is_authenticated %}
+        <a class="nav-link link-light" href="{% url 'logout' %}">
           <i class="fa-solid fa-right-from-bracket"></i>
           Logout
         </a>
+        {% endif %}
       </div>
     </div>
   </nav>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+    <div class="row justify-content-md-center" style="padding-top: 20px; text-align: center;">
+      <!-- <div class="col-3">
         <div class="list-group">
           {% if user.is_authenticated %}
-          <a href="{% url 'account_email' %}" class="list-group-item list-group-item-action">Change E-mail</a>
-          <a href="{% url 'account_logout' %}" class="list-group-item list-group-item-action">Sign Out </a>
+          <a href="{% url 'account_email' %}" class="list-group-item list-group-item-action" style="background-color:#e5dff1;">Change E-mail</a>
+          <a href="{% url 'account_logout' %}" class="list-group-item list-group-item-action" style="background-color:#e5dff1;">Sign Out </a>
           {% else %}
-          <a href="{% url 'account_login' %}" class="list-group-item list-group-item-action">Sign In </a>
-          <a href="{% url 'account_signup' %}" class="list-group-item list-group-item-action">Sign Up </a>
+          <a href="{% url 'account_login' %}" class="list-group-item list-group-item-action" style="background-color:#e5dff1;">Sign In </a>
+          <a href="{% url 'account_signup' %}" class="list-group-item list-group-item-action" style="background-color:#e5dff1;">Sign Up </a>
           {% endif %}
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 

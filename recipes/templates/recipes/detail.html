@@ -10,7 +10,7 @@
         {% bootstrap_javascript %}
         
         <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
-        {% bootstrap_messages %}
+        <!-- {% bootstrap_messages %} -->
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -19,12 +19,15 @@
         <title>Recipe</title>
     </head>
 
-    <body style="padding-bottom: 30px;">
+    <body style="padding-bottom: 30px; background-color:#ddd3f0;">
 
         <!-- NAVBAR -->
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Word of Mouth</a>
+              <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-utensils" style="padding-right: 5px;"></i>
+                Word of Mouth
+              </a>
               <button   class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -45,11 +48,9 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                  </li>
+                   
                 </ul>
-                <a class="nav-link" href="{% url 'logout' %}">
+                <a class="nav-link link-light" href="{% url 'logout' %}">
                   <i class="fa-solid fa-right-from-bracket"></i>
                   Logout
                 </a>
@@ -60,36 +61,58 @@
         <div class="py-3 px-5">
           {% if recipe.isforked == 1 %}
           <div class="row">
-            <a href="{% url 'recipes:detail' recipe.forkedid %}" style="text-decoration: none;">
-              <i class="fa-solid fa-angles-left"></i>
-              Back to parent recipe
+            <a href="{% url 'recipes:detail' recipe.forkedid %}" style="text-decoration: none; color: #381e67;">
+              <i class="fa-solid fa-circle-arrow-left"></i>
+              <b>Back to parent recipe</b>
             </a>
           </div>
           {% else %}
           <div class="row">
-            <a href="{% url 'recipes:all_recipes' %}" style="text-decoration: none;">
-              <i class="fa-solid fa-angles-left"></i>
-              Back to recipes index
+            <a href="{% url 'recipes:all_recipes' %}" style="text-decoration: none; color: #381e67;">
+              <i class="fa-solid fa-circle-arrow-left"></i>
+              <b>Back to recipes index</b>
             </a>
           </div>
           {% endif %}
 
-            <h1>{{recipe.title|capfirst}}</h1>
+            <h1>
+              {{recipe.title|capfirst}}
+            </h1>
             <div class="row">
-              <p class="col-10">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}</p>
+              <p class="col-10">Prep Time: {{recipe.prep_time}} min |  Cook Time: {{recipe.cook_time}} min |  Servings: {{recipe.servings}}
+                {% if recipe.diet_restriction == 'VG' %}
+                | <span class="badge rounded-pill bg-success">VEGAN</span>
+                {% endif %}
+                {% if recipe.diet_restriction == 'VE' %}
+                | <span class="badge rounded-pill bg-warning">VEGETARIAN</span>
+                {% endif %}
+                {% if recipe.diet_restriction == 'GF' %}
+                | <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
+                {% endif %}
+              </p>
               <div class="col-1">
-                <a class="btn btn-danger col-12" href="{% url 'recipes:fork' recipe.id%}" role="button">Fork</a>
+                <a class="btn btn-danger col-12" href="{% url 'recipes:fork' recipe.id%}" role="button">
+                  <i class="fa-solid fa-code-fork"></i>
+                  Fork
+                </a>
               </div>
               {% if recipe in user.userprofile.saved.all %}
               <div class="col-1">
-                <a class="btn btn-danger col-12" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">Unfavorite</a>
+                <a class="btn btn-danger col-12" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
+                  
+                  Unfavorite
+                </a>
               </div>
               {% else %}
               <div class="col-1">
-                <a class="btn btn-danger col-12" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">Favorite</a>
+                <a class="btn btn-danger col-12" href="{% url 'recipes:save_recipe' recipe.id%}" role="button">
+                  
+                  Favorite
+                </a>
               </div>
               {% endif %}
             </div>
+
             <hr/>
 
             <div class="row">
@@ -98,7 +121,7 @@
                     <div>
                         <ul class="list-group">
                             {% for ingredient in recipe.ingredients.all %}
-                                <li class="list-group-item"><b>{{ingredient.name}}:</b> {{ingredient.quantity}}</li>
+                                <li class="list-group-item" style="background-color:#e5dff1;"><b>{{ingredient.name}}:</b> {{ingredient.quantity}}</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -109,7 +132,7 @@
                     <div>
                       <ol class="list-group list-group-numbered">
                           {% for step in recipe.steps.all %}
-                              <li class="list-group-item">{{step.name}}</li>
+                              <li class="list-group-item" style="background-color:#e5dff1;">{{step.name}}</li>
                           {% endfor %}
                       </ol>
                   </div>
@@ -159,12 +182,12 @@
               </style>
 
               <div class="row">
-                <div class="col-3">
+                <div class="col-12">
                   <h2 style="font-size: 25px">Forked Recipes</h2>
                    {% if recipe.forked_recipes|length == 0 %}
                     <p>This recipe has not been forked yet.</p>
                     {% else %}
-                  <div id="carouselForked" class="carousel slide" data-bs-ride="carousel">
+                  <div id="carouselForked" class="carousel slide col-3" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                       {% for rec in recipe.forked_recipes %}
                         {% if forloop.first%}
@@ -207,12 +230,72 @@
                 </div>
               </div>
               {% endif %}
-
-
               
-            </div>
             
+
+            
+
+            <div>
+              <hr>
+              <div class="row">
+                <h3 class="col-10">Reviews</h3>
+                <a class="btn btn-secondary mb-2 col-12" style="width: 150px" href="{% url 'review:write_review' recipe.id%}" role="button">
+                  <i class="fa-solid fa-message"></i>
+                  Add a Review
+                </a>
+              </div>
+
+              {% if recipe.reviews.all|length == 0 %}
+                <p>Be the first to add a review!</p>
+              {% endif %}
+
+              {% for review in recipe.reviews.all %}
+                <div class="card mb-2 p-2" style="background-color:#e5dff1;">
+                  <p style="font-size: 20px" class="m-0 p-0"><b>{{review.title}}</b>
+                    <span style="font-size: 15px;">posted by {{review.author|capfirst}}</span>
+                  </p>
+                  <p class="reviewRating">
+                    Rating: 
+                    {% if review.rating == 1 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 2 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 3 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 4 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 5 %}
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    <i class="fa-solid fa-star" style="color:goldenrod"></i>
+                    {% endif %}
+                  </p>
+                  <p class="reviewContent">{{review.content}}</p>
+                </div>
+              {% endfor %}
+            </div>
+
+
         </div>
+      
 
 
     </body>

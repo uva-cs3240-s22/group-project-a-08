@@ -17,8 +17,8 @@
         {% bootstrap_css %}
         {% bootstrap_javascript %}
         
-        {# Display django.contrib.messages as Bootstrap alerts #}
-        {% bootstrap_messages %}
+        <!-- {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %} -->
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -26,12 +26,15 @@
         <title>Upload Recipe</title>
     </head>
 
-    <body style="padding-bottom: 30px;">
+    <body style="padding-bottom: 30px; background-color:#ddd3f0;">
 
         <!-- NAVBAR -->
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Word of Mouth</a>
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-utensils" style="padding-right: 5px;"></i>
+                    Word of Mouth
+                  </a>
               <button   class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -52,11 +55,9 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                  </li>
+                   
                 </ul>
-                <a class="nav-link" href="{% url 'logout' %}">
+                <a class="nav-link link-light" href="{% url 'logout' %}">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                   </a>
@@ -67,6 +68,7 @@
             <div class="row">
                 <div class="col">
                 <h1>Add A Recipe</h1>
+                <hr>
                 <form action="." method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
                     {% bootstrap_form form %}
@@ -75,6 +77,7 @@
                     <!-- INGREDIENT FORM -->
                 
                     <h1>Add Ingredients</h1>
+                    <hr>
                     {{ formset.management_form }}
                     <div id="ingredient-form">
                     {% for form in formset %}
@@ -86,13 +89,14 @@
                 
 
                     <div id="empty-form" class="hidden">{{ formset.empty_form.as_p }}</div>
-                    <button id="add-ingredient" type="button" class="btn btn-success">Add Ingredient</button>
+                    <button id="add-ingredient" type="button" class="btn btn-secondary">Add Ingredient</button>
                 
                     <br>
                     <br>
                     <!-- STEP FORM -->
                     
                     <h1>Add Steps</h1>
+                    <hr>
                     {{ step_formset.management_form }}
                     <div id="step-form">
                     {% for form in step_formset %}
@@ -103,11 +107,10 @@
                     </div>
 
                     <div id="empty-form2" class="hidden">{{ step_formset.empty_form.as_p }}</div>
-                    <button id="add-step" type="button" class="btn btn-success">Add Step</button>
+                    <button id="add-step" type="button" class="btn btn-secondary">Add Step</button>
                 
 
-                    
-                    <p style="padding-top: 10px;"><button type="submit" class="btn btn-outline-success btn-lg">Submit Recipe</button></p>
+                    <p style="padding-top: 10px;"><button type="submit" class="btn btn-secondary btn-lg">Submit Recipe</button></p>
                     
                 </form>
                 </div>

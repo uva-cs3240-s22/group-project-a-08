@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "home",
     "recipes",
     "users",
+    "review",
 ]
 
 # Use FOR OAuth

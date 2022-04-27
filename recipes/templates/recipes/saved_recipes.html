@@ -10,7 +10,7 @@
         {% bootstrap_javascript %}
         
         <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
-        {% bootstrap_messages %}
+        <!-- {% bootstrap_messages %} -->
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -20,10 +20,13 @@
     </head>
 
     <!-- NAVBAR -->
-    <body style="padding-bottom: 30px;">
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <body style="padding-bottom: 30px; background-color:#ddd3f0;">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #381e67;">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Word of Mouth</a>
+              <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-utensils" style="padding-right: 5px;"></i>
+                Word of Mouth
+              </a>
               <button   class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -44,11 +47,9 @@
                   <li class="nav-item">
                     <a class="nav-link active" href="{% url 'recipes:saved_recipes' %}">Favorites</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                  </li>
+                   
                 </ul>
-                <a class="nav-link" href="{% url 'logout' %}">
+                <a class="nav-link link-light" href="{% url 'logout' %}">
                   <i class="fa-solid fa-right-from-bracket"></i>
                   Logout
                 </a>
@@ -59,11 +60,12 @@
           <h1 class="mt-3 text-center">{{ user.username|capfirst}}'s Favorite Recipes</h1>
 
           <div class="px-5 pt-3">
+            <hr>
               {% if user.userprofile.saved.all %}
                 <div class="row">
                   {% for recipe in user.userprofile.saved.all %}
                     <div class="col-2">
-                        <div class="card">  
+                        <div class="card" style="background-color:#e5dff1;">  
                             <div style="position: relative">
                                 <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                               <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
@@ -73,8 +75,8 @@
                                 </svg>
                               </a>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title|capfirst }}</a></h5>
+                            <div class="card-body" style="position: relative;">
+                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
                                 <p class="card-text">
                                   PrepTime: {{ recipe.prep_time }} mins<br>
                                   CookTime: {{ recipe.cook_time }} mins<br>
