@@ -17,8 +17,8 @@
         {% bootstrap_css %}
         {% bootstrap_javascript %}
         
-        <!-- {# Display django.contrib.messages as Bootstrap alerts #}
-        {% bootstrap_messages %} -->
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -80,7 +80,7 @@
                 {{ form.content }}
               </div>
 
-              <button class="btn btn-primary" type="submit">Submit</button>
+              <button class="btn btn-secondary" type="submit">Submit</button>
           </form>
         </div>
         
