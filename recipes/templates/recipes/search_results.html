@@ -181,7 +181,16 @@
                                 PrepTime: {{ recipe.prep_time }} mins<br>
                                 CookTime: {{ recipe.cook_time }} mins<br>
                                 Servings: {{ recipe.servings }} <br>
-                                
+                                <!-- MEAL TYPE -->
+                                {% if recipe.meal_type == 'BR' %}
+                                Breakfast <br>
+                                {% elif recipe.meal_type == 'LU' %}
+                                Lunch <br>
+                                {% elif recipe.meal_type == 'DI' %}
+                                Dinner <br>
+                                {% elif recipe.meal_type == 'SN' %}
+                                Snack <br>
+                                {% endif %}
                                 {% if recipe.diet_restriction == 'VG' %}
                                 <span class="badge rounded-pill bg-success">VEGAN</span>
                                 {% endif %}
