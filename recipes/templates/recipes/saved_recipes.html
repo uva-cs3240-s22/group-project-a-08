@@ -59,21 +59,25 @@
 
           <h1 class="mt-3 text-center">{{ user.username|capfirst}}'s Favorite Recipes</h1>
 
-          <div class="px-5 pt-3">
+
+          <div class="mx-5 pt-3">
             <hr>
+
+            
               {% if user.userprofile.saved.all %}
-                <div class="row">
+                <div class="d-flex justify-content-start col-10" style="padding-left: 0px;">
+                  <div class="d-flex flex-row bd-highlight mb-3 w-100">
                   {% for recipe in user.userprofile.saved.all %}
-                    <div class="col-2">
+                    <div class="d-flex justify-content-evenly col-3" style="padding-left: 0px; padding-right: 20px;">
                         <div class="card" style="background-color:#e5dff1;">  
                             <div style="position: relative">
                                 <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
                               <!--img src="https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=" class="card-img-top" alt="..."-->
-                              <a class="unsaveBtn btn btn-danger" style="position: absolute; top: 5%; Right: 5%" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                                  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
-                                </svg>
-                              </a>
+                                <a class="unsaveBtn btn btn-danger" style="position: absolute; top: 5%; Right: 5%" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                                  </svg>
+                                </a>
                             </div>
                             <div class="card-body" style="position: relative;">
                                 <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
@@ -104,7 +108,75 @@
                             </div>
                         </div>
                     </div>
+                    {% if forloop.counter|divisibleby:5 %}
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start col-12">
+                  <div class="d-flex flex-row justify-content-start bd-highlight mb-3 col-10">
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                </div>
+                {% else %}
+                <div style="text-align: center;">
+                  <p style="font-size: 20px;">No recipes saved yet.</p>
+                </div>
+              {% endif %}
+              
+
+
+
+
+          <!-- <div class="px-5 pt-3">
+            <hr>
+
+            
+              {% if user.userprofile.saved.all %}
+                <div class="row">
+                  
+                  {% for recipe in user.userprofile.saved.all %}
+                    <div class="col-2">
+                        <div class="card" style="background-color:#e5dff1;">  
+                            <div style="position: relative">
+                                <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
+                              
+                              <a class="unsaveBtn btn btn-danger" style="position: absolute; top: 5%; Right: 5%" href="{% url 'recipes:unsave_recipe' recipe.id %}" role="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                                </svg>
+                              </a>
+                            </div>
+                            <div class="card-body" style="position: relative;">
+                                <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
+                                <p class="card-text">
+                                  PrepTime: {{ recipe.prep_time }} mins<br>
+                                  CookTime: {{ recipe.cook_time }} mins<br>
+                                  Servings: {{ recipe.servings }} <br>
+                                  
+                                  {% if recipe.meal_type == 'BR' %}
+                                  Breakfast <br>
+                                  {% elif recipe.meal_type == 'LU' %}
+                                  Lunch <br>
+                                  {% elif recipe.meal_type == 'DI' %}
+                                  Dinner <br>
+                                  {% elif recipe.meal_type == 'SN' %}
+                                  Snack <br>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'VG' %}
+                                  <span class="badge rounded-pill bg-success">VEGAN</span>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'VE' %}
+                                  <span class="badge rounded-pill bg-warning">VEGETARIAN</span>
+                                  {% endif %}
+                                  {% if recipe.diet_restriction == 'GF' %}
+                                  <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
+                                  {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     {% if forloop.counter|divisibleby:6 %}
+                  
                 </div>
                 <div class="row">
                     {% endif %}
@@ -113,9 +185,9 @@
               {% else %}
                 <div>No recipes saved yet</div>
               {% endif %}
-          </div>
+          </div> -->
 
-          <div class="row">
+          <!-- <div class="row">
             {% for item in items %}
                 <div class="three columns">{{ item }}
                 </div>
@@ -124,7 +196,7 @@
             <div class="row">
                 {% endif %}
             {% endfor %}
-            </div>
+            </div> -->
 
     </body>
 
