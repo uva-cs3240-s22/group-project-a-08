@@ -1,3 +1,4 @@
+from fileinput import FileInput
 from django import forms
 from .models import Recipe, Ingredient, Step
 from django.forms import DurationField, modelformset_factory # dynamic
@@ -8,6 +9,9 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         fields = '__all__'
         exclude = ('isforked','forkedid')
+        widgets = {
+            'upload': forms.FileInput(attrs={'class': 'form-control', "required": "required"}),
+        }
 
 
 class IngredientForm(forms.ModelForm):
