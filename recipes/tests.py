@@ -38,7 +38,7 @@ class RecipeSearchTests(TestCase):
     
     def test_search_failure(self):
         response = self.client.get("/recipes/search/?recipeTitle=fail")
-        data = '<p>No recipes are available.</p>'
+        data = 'No recipes are available.'
         self.assertInHTML(data,response.content.decode())
     
     def test_empty_query(self):
