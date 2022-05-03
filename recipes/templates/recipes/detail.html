@@ -10,7 +10,7 @@
         {% bootstrap_javascript %}
         
         <!-- {# Display django.contrib.messages as Bootstrap alerts #} -->
-        <!-- {% bootstrap_messages %} -->
+        {% bootstrap_messages %}
     
         {% load static %}
         <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -288,7 +288,7 @@
                     <i class="fa-solid fa-star" style="color:goldenrod"></i>
                     {% endif %}
                   </p>
-                  <p class="reviewContent">{{review.content}}</p>
+                  <p class="reviewContent" style="white-space: pre-wrap;">{{review.content}}</p>
                 </div>
               {% endfor %}
             </div>

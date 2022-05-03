@@ -45,29 +45,19 @@ def create_recipe(request):
         return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
     elif request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
+        formset = IngredientFormSet(request.POST)
+        step_formset = StepFormSet(request.POST)
         if form.is_valid():
             recipe = form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)
-            #print(formset)
-            # print("------------------")
-            # print(formset.errors)
-            # print("------------------")
-
             step_formset = StepFormSet(request.POST, instance=recipe)
-            #print(step_formset)
-            # print(formset.cleaned_data['name'])
-            # print(formset.cleaned_data['quantity'])
-            # print(formset.cleaned_data['units'])
-            #print(formset.data)
             if formset.is_valid():
-                #print("ingreds valid")
                 formset.save()
             if step_formset.is_valid():
-                #print("steps valid")
                 step_formset.save()
             return HttpResponseRedirect(reverse('recipes:detail', args=(recipe.id,)))
         else:
-            return render(request, 'recipes/create_recipe.html', {"form":form})
+            return render(request, 'recipes/create_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset})
 
 @login_required(login_url='/')
 def save_recipe(request, pk):
@@ -150,8 +140,10 @@ def fork_recipe(request,pk):
         return render(request, 'recipes/fork_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset, "original_recipe":original_recipe,})
     elif request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
+        formset = IngredientFormSet(request.POST)
+        step_formset = StepFormSet(request.POST)
+        original_recipe = Recipe.objects.get(pk = pk)
         if form.is_valid():
-            original_recipe = Recipe.objects.get(pk = pk)
             recipe = form.save()
             recipe.forkedid = pk
             recipe.isforked = 1
@@ -166,7 +158,7 @@ def fork_recipe(request,pk):
                 step_formset.save()
             return HttpResponseRedirect(reverse('recipes:detail', args=(recipe.id,)))
         else:
-            return render(request, 'recipes/fork_recipe.html', {"form":form})
+            return render(request, 'recipes/fork_recipe.html', {"form":form, "formset":formset, "step_formset":step_formset, "original_recipe":original_recipe,})
 
 
 

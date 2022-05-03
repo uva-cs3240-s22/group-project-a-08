@@ -9,8 +9,8 @@
   {% bootstrap_css %}
   {% bootstrap_javascript %}
 
-  <!-- {# Display django.contrib.messages as Bootstrap alerts #}
-  {% bootstrap_messages %} -->
+  {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %}
 
   {% load static %}
   <script src="https://kit.fontawesome.com/f79546f450.js" crossorigin="anonymous"></script>
@@ -63,7 +63,7 @@
         <div class="input-group-prepend">
           <button class="btn btn-secondary" type="submit">Search</button>
         </div>
-        <input type="text" name="recipeTitle" class="form-control" id="search" placeholder="Search recipes..." style="width:80%; margin: auto;" />
+        <input type="text" name="recipeTitle" class="form-control" id="search" placeholder="Search by title..." style="width:80%; margin: auto;" />
       </div>
     </form>
 
@@ -169,13 +169,9 @@
                     <div class="d-flex justify-content-evenly col-3" style="padding-left: 10px; padding-right: 10px;">
                       <div class="card" style="background-color:#e5dff1;">  
                         <img src="{{ recipe.upload.url }}" class="card-img-top" alt="..." />
-                        <div class="card-body">
-                          <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
-                          <p class="card-text">
-                            PrepTime: {{ recipe.prep_time }} mins<br>
-                            CookTime: {{ recipe.cook_time }} mins<br>
-                            Servings: {{ recipe.servings }} <br>
-                            
+                        <div class="card-img-overlay" style="text-align: end;">
+                          <!-- DIET RESTRICTION -->
+                          <h5>
                             {% if recipe.diet_restriction == 'VG' %}
                             <span class="badge rounded-pill bg-success">VEGAN</span>
                             {% endif %}
@@ -185,6 +181,25 @@
                             {% if recipe.diet_restriction == 'GF' %}
                             <span class="badge rounded-pill bg-info">GLUTEN-FREE</span>
                             {% endif %}
+                          </h5>
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><a href="{% url 'recipes:detail' recipe.id %}" class="stretched-link link-dark" style="text-decoration: none;">{{ recipe.title|capfirst }}</a></h5>
+                          <p class="card-text">
+                            Prep Time: {{ recipe.prep_time }} mins<br>
+                            Cook Time: {{ recipe.cook_time }} mins<br>
+                            Servings: {{ recipe.servings }} <br>
+                            <!-- MEAL TYPE -->
+                            {% if recipe.meal_type == 'BR' %}
+                            Breakfast <br>
+                            {% elif recipe.meal_type == 'LU' %}
+                            Lunch <br>
+                            {% elif recipe.meal_type == 'DI' %}
+                            Dinner <br>
+                            {% elif recipe.meal_type == 'SN' %}
+                            Snack <br>
+                            {% endif %}
+                            
                           </p>
                         </div>
                       </div>
@@ -199,7 +214,9 @@
             </div>
         </div>
         {% else %}
-            <p>No recipes are available.</p>
+          <div style="text-align: center;">
+            <p style="font-size: 20px;">No recipes are available.</p>
+          </div>
         {% endif %}
     </div>
 
